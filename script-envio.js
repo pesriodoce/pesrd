@@ -12,23 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   btnEnviar.addEventListener('click', function() {
-    const formData = new FormData();
-    formData.append('_replyto', 'no-reply@pesriodoce.org.br');
-    formData.append('_subject', `Plano Aprovado - ${localStorage.getItem('municipioLogado')}`);
-    formData.append('uploaded_file', uploadInput.files[0]);
+  // Adicionar spinner
+  btnEnviar.innerHTML = '<span class="spinner">⌛</span> Enviando...';
+  btnEnviar.disabled = true;
 
-    fetch('https://formsubmit.co/ajax/saude.riodoce@saude.gov.br', {
-      method: "POST",
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      alert('Plano enviado com sucesso para a Câmara Técnica!');
-      btnEnviar.disabled = true;
-    })
-    .catch(error => {
-      alert('Erro no envio. Tente novamente.');
-      console.error(error);
-    });
+  // Código do fetch...
+  fetch('https://formsubmit.co/ajax/saude.riodoce@saude.gov.br', {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Plano enviado com sucesso!');
+  })
+  .catch(error => {
+    alert('Erro no envio. Tente novamente.');
+  })
+  .finally(() => {
+    btnEnviar.disabled = false;
+    btnEnviar.innerHTML = 'Enviar para tiago.magalhaes@saude.gov.br'; // Restaurar texto
   });
+});
 });
