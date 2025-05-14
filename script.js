@@ -103,6 +103,7 @@ function logout() {
   checkLogin();
 }
 
+    
 const municipios = {
   MG: ["Aimorés", "Alpercata", "Barra Longa", "Belo Oriente", "Bom Jesus do Galho", "Bugre", "Caratinga", "Conselheiro Pena", "Coronel Fabriciano", "Córrego Novo", "Dionísio", "Fernandes Tourinho", "Galiléia", "Governador Valadares", "Iapu", "Ipaba", "Ipatinga", "Itueta", "Mariana", "Marliéria", "Naque", "Ouro Preto", "Periquito", "Pingo D’água", "Ponte Nova", "Raul Soares", "Resplendor", "Rio Casca", "Rio Doce", "Santa Cruz do Escalvado", "Santana do Paraíso", "São Domingos do Prata", "São José do Goiabal", "São Pedro dos Ferros", "Sem Peixe", "Sobrália", "Timóteo", "Tumiritinga"],
   ES: ["Anchieta", "Aracruz", "Baixo Guandu", "Colatina", "Conceição da Barra", "Fundão", "Linhares", "Marilândia", "São Mateus", "Serra", "Sooretama"],
@@ -122,6 +123,26 @@ function updateMunicipios(uf) {
   });
 }
 
+const eixos = [
+  "Fortalecimento e ampliação dos serviços de Atenção à Saúde",
+  "Fortalecimento e ampliação das ações e serviços de Vigilância em Saúde",
+  "Fortalecimento, ampliação e melhorias da infraestrutura de saúde",
+  "Melhoria das práticas de gestão em saúde",
+  "Ações de inteligência e ciências de dados e serviços de saúde digital",
+  "Formação e educação permanente"
+];
+
+const container = document.getElementById("eixos-container");
+eixos.forEach((titulo, i) => {
+  const n = i + 1;
+  container.innerHTML += `
+    <div class="section">
+      <h2 onclick="toggleAccordion('eixo${n}')">Eixo ${n} - ${titulo}</h2>
+      <div class="accordion" id="eixo${n}"></div>
+      <button class="add-action" onclick="addAction('eixo${n}')">Adicionar nova ação</button>
+    </div>`;
+});
+    
 function toggleAccordion(id) {
   document.querySelectorAll(".accordion-body").forEach(el => {
     if (el.id !== id) el.style.display = "none";
@@ -377,26 +398,6 @@ function generatePDF() {
   addText("Emitido em: " + new Date().toLocaleDateString(), { size: 10, spacingBefore: 20 });
   doc.output('dataurlnewwindow');
 }
-
-const eixos = [
-  "Fortalecimento e ampliação dos serviços de Atenção à Saúde",
-  "Fortalecimento e ampliação das ações e serviços de Vigilância em Saúde",
-  "Fortalecimento, ampliação e melhorias da infraestrutura de saúde",
-  "Melhoria das práticas de gestão em saúde",
-  "Ações de inteligência e ciências de dados e serviços de saúde digital",
-  "Formação e educação permanente"
-];
-
-const container = document.getElementById("eixos-container");
-eixos.forEach((titulo, i) => {
-  const n = i + 1;
-  container.innerHTML += `
-    <div class="section">
-      <h2 onclick="toggleAccordion('eixo${n}')">Eixo ${n} - ${titulo}</h2>
-      <div class="accordion" id="eixo${n}"></div>
-      <button class="add-action" onclick="addAction('eixo${n}')">Adicionar nova ação</button>
-    </div>`;
-});
 
 // Persistência de dados (formulario.html)
 if (window.location.pathname.includes('formulario.html')) {
