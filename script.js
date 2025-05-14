@@ -1,6 +1,6 @@
 // Dados completos de acesso
 const municipiosAutorizados = {
-    // Minas Gerais (MG + código IBGE)
+// Minas Gerais (MG + código IBGE)
     "MG310110": { nome: "AIMORÉS", senha: "PESRD2025" },
     "MG310180": { nome: "ALPERCATA", senha: "PESRD2025" },
     "MG310570": { nome: "BARRA LONGA", senha: "PESRD2025" },
@@ -57,33 +57,67 @@ const municipiosAutorizados = {
     "DF530010": { nome: "BRASÍLIA", senha: "PESRD2025" }
 };
 
-// Controle de sessão
-function checkLogin() {
-  const codigo = localStorage.getItem('municipioLogado');
-  if (codigo && municipiosAutorizados[codigo]) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
-    document.getElementById('municipio-logado').textContent = 
-      `Município: ${municipiosAutorizados[codigo].nome}`;
-  } else {
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('main-content').style.display = 'none';
-  }
-}
+// Inicialização segura
+document.addEventListener('DOMContentLoaded', function () {
+  checkLogin();
 
-// Sistema de login
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const codigo = document.getElementById('codigo').value.trim().toUpperCase();
-  const senha = document.getElementById('senha').value;
+// Evento de login
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const codigo = document.getElementById('codigo').value.trim().toUpperCase();
+      const senha = document.getElementById('senha').value;
 
-  if (municipiosAutorizados[codigo] && municipiosAutorizados[codigo].senha === senha) {
-    localStorage.setItem('municipioLogado', codigo);
-    checkLogin();
-  } else {
-    alert('Credenciais inválidas!');
+      if (municipiosAutorizados[codigo] && municipiosAutorizados[codigo].senha === senha) {
+        localStorage.setItem('municipioLogado', codigo);
+        checkLogin();
+      } else {
+        alert('Credenciais inválidas!');
+      }
+    });
+  } 
+    
+  // Eixos dinâmicos (exemplo simplificado)
+  const eixos = [
+    "Fortalecimento e ampliação dos serviços de Atenção à Saúde",
+    "Fortalecimento e ampliação das ações e serviços de Vigilância em Saúde",
+    "Fortalecimento, ampliação e melhorias da infraestrutura de saúde",
+    "Melhoria das práticas de gestão em saúde",
+    "Ações de inteligência e ciências de dados e serviços de saúde digital",
+    "Formação e educação permanente"
+  ];
+
+  const container = document.getElementById("eixos-container");
+  if (container) {
+    eixos.forEach((titulo, i) => {
+      const n = i + 1;
+      container.innerHTML += `
+        <div class="section">
+          <h2 onclick="toggleAccordion('eixo${n}')">Eixo ${n} - ${titulo}</h2>
+          <div class="accordion" id="eixo${n}"></div>
+          <button class="add-action" onclick="addAction('eixo${n}')">Adicionar nova ação</button>
+        </div>`;
+    });
   }
 });
+
+// Sessão
+function checkLogin() {
+  const codigo = localStorage.getItem('municipioLogado');
+  const loginScreen = document.getElementById('login-screen');
+  const mainContent = document.getElementById('main-content');
+
+  if (codigo && municipiosAutorizados[codigo]) {
+    if (loginScreen) loginScreen.style.display = 'none';
+    if (mainContent) mainContent.style.display = 'block';
+    const municipioLogado = document.getElementById('municipio-logado');
+    if (municipioLogado) municipioLogado.textContent = `Município: ${municipiosAutorizados[codigo].nome}`;
+  } else {
+    if (loginScreen) loginScreen.style.display = 'flex';
+    if (mainContent) mainContent.style.display = 'none';
+  }
+}
 
 // Logout
 function logout() {
@@ -93,12 +127,6 @@ function logout() {
   checkLogin();
 }
 
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', function() {
-  checkLogin();
-
-  
 const municipios = {
   MG: ["Aimorés", "Alpercata", "Barra Longa", "Belo Oriente", "Bom Jesus do Galho", "Bugre", "Caratinga", "Conselheiro Pena", "Coronel Fabriciano", "Córrego Novo", "Dionísio", "Fernandes Tourinho", "Galiléia", "Governador Valadares", "Iapu", "Ipaba", "Ipatinga", "Itueta", "Mariana", "Marliéria", "Naque", "Ouro Preto", "Periquito", "Pingo D’água", "Ponte Nova", "Raul Soares", "Resplendor", "Rio Casca", "Rio Doce", "Santa Cruz do Escalvado", "Santana do Paraíso", "São Domingos do Prata", "São José do Goiabal", "São Pedro dos Ferros", "Sem Peixe", "Sobrália", "Timóteo", "Tumiritinga"],
   ES: ["Anchieta", "Aracruz", "Baixo Guandu", "Colatina", "Conceição da Barra", "Fundão", "Linhares", "Marilândia", "São Mateus", "Serra", "Sooretama"],
