@@ -372,3 +372,10 @@ textarea {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* Estilo para campos vazios no PDF */
+input:empty::before, textarea:empty::before {
+  content: "Não preenchido";
+  color: #999;
+  font-style: italic;
+}
