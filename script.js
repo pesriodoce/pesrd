@@ -78,30 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   } 
     
-  // Eixos dinâmicos (exemplo simplificado)
-  const eixos = [
-    "Fortalecimento e ampliação dos serviços de Atenção à Saúde",
-    "Fortalecimento e ampliação das ações e serviços de Vigilância em Saúde",
-    "Fortalecimento, ampliação e melhorias da infraestrutura de saúde",
-    "Melhoria das práticas de gestão em saúde",
-    "Ações de inteligência e ciências de dados e serviços de saúde digital",
-    "Formação e educação permanente"
-  ];
-
-  const container = document.getElementById("eixos-container");
-  if (container) {
-    eixos.forEach((titulo, i) => {
-      const n = i + 1;
-      container.innerHTML += `
-        <div class="section">
-          <h2 onclick="toggleAccordion('eixo${n}')">Eixo ${n} - ${titulo}</h2>
-          <div class="accordion" id="eixo${n}"></div>
-          <button class="add-action" onclick="addAction('eixo${n}')">Adicionar nova ação</button>
-        </div>`;
-    });
-  }
-});
-
 // Sessão
 function checkLogin() {
   const codigo = localStorage.getItem('municipioLogado');
