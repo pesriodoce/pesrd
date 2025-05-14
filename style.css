@@ -361,3 +361,14 @@ textarea {
 #main-content[style*="display: block"] {
   display: block !important; /* Sobrescreve qualquer estilo inline conflitante */
 }
+
+.spinner {
+  animation: rotate 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
