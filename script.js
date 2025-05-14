@@ -104,25 +104,7 @@ function logout() {
   checkLogin();
 }
 
-    
-const municipios = {
-  MG: ["Aimorés", "Alpercata", "Barra Longa", "Belo Oriente", "Bom Jesus do Galho", "Bugre", "Caratinga", "Conselheiro Pena", "Coronel Fabriciano", "Córrego Novo", "Dionísio", "Fernandes Tourinho", "Galiléia", "Governador Valadares", "Iapu", "Ipaba", "Ipatinga", "Itueta", "Mariana", "Marliéria", "Naque", "Ouro Preto", "Periquito", "Pingo D’água", "Ponte Nova", "Raul Soares", "Resplendor", "Rio Casca", "Rio Doce", "Santa Cruz do Escalvado", "Santana do Paraíso", "São Domingos do Prata", "São José do Goiabal", "São Pedro dos Ferros", "Sem Peixe", "Sobrália", "Timóteo", "Tumiritinga"],
-  ES: ["Anchieta", "Aracruz", "Baixo Guandu", "Colatina", "Conceição da Barra", "Fundão", "Linhares", "Marilândia", "São Mateus", "Serra", "Sooretama"],
-  DF: ["Brasília"]
-};
-
 window.actionCount = 0;
-
-function updateMunicipios(uf) {
-  const select = document.getElementById("municipio-select");
-  select.innerHTML = "";
-  (municipios[uf] || []).forEach(m => {
-    const option = document.createElement("option");
-    option.value = m;
-    option.textContent = m;
-    select.appendChild(option);
-  });
-}
 
 const eixos = [
   "Fortalecimento e ampliação dos serviços de Atenção à Saúde",
