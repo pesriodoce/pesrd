@@ -45,13 +45,21 @@ body {
 
 /* Dashboard */
 .dashboard-container {
-  display: none;
   max-width: 900px;
   margin: 2rem auto;
   padding: 2rem;
   background: white;
   border-radius: var(--borda-radius);
   box-shadow: var(--sombra);
+}
+
+/* Garantir prioridade para o estilo inline */
+#main-content {
+  display: none;
+}
+
+#main-content[style*="display: block"] {
+  display: block !important;
 }
 
 .card-container {
