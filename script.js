@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   } 
+    });
     
 // Sessão
 function checkLogin() {
