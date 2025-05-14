@@ -261,6 +261,21 @@ function addAction(eixoId) {
   }, 100);
 }
 function generatePDF() {
+ // Campos obrigatórios
+  const obrigatorios = {
+    'uf': 'Selecione a UF!',
+    'municipio-select': 'Selecione o município!',
+    'responsavel': 'Preencha o responsável!'
+  };
+
+  for (const [id, mensagem] of Object.entries(obrigatorios)) {
+    const campo = document.getElementById(id);
+    if (!campo.value.trim()) {
+      alert(mensagem);
+      campo.focus();
+      return;
+    }
+  }    
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF('p', 'pt', 'a4');
   let y = 60;
