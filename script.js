@@ -61,6 +61,23 @@ const municipiosAutorizados = {
 document.addEventListener('DOMContentLoaded', function () {
   checkLogin();
 
+  // ===== PREENCHER UF E MUNICÍPIO (FORMULÁRIO) ===== //
+  if (window.location.pathname.includes('formulario.html')) {
+    const codigo = localStorage.getItem('municipioLogado');
+    
+    if (codigo && municipiosAutorizados[codigo]) {
+      // Extrair UF (primeiros 2 caracteres)
+      const uf = codigo.substring(0, 2); // Ex: "MG310110" → "MG"
+      
+      // Buscar nome do município
+      const municipio = municipiosAutorizados[codigo].nome; // Ex: "AIMORÉS"
+      
+      // Preencher campos (IDs devem bater com o HTML!)
+      document.getElementById('uf').value = uf;
+      document.getElementById('municipio-select').value = municipio;
+    }
+  }
+    
 // Evento de login
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
