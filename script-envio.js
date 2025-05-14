@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   btnEnviar.addEventListener('click', function() {
+  const formData = new FormData(); // ✔️ Criar o FormData
+  formData.append('_replyto', 'no-reply@pesriodoce.org.br');
+  formData.append('_subject', `Plano Aprovado - ${localStorage.getItem('municipioLogado')}`);
+  formData.append('uploaded_file', uploadInput.files[0]); // Anexar o PDF
   // Adicionar spinner
   btnEnviar.innerHTML = '<span class="spinner">⌛</span> Enviando...';
   btnEnviar.disabled = true;
