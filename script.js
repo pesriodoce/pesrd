@@ -406,3 +406,18 @@ eixos.forEach((titulo, i) => {
       <button class="add-action" onclick="addAction('eixo${n}')">Adicionar nova ação</button>
     </div>`;
 });
+
+// Persistência de dados (formulario.html)
+if (window.location.pathname.includes('formulario.html')) {
+  // Salvar dados
+  const campos = ['responsavel', 'cargo', 'uf', 'municipio-select', 'perfil-socio', 'perfil-epidemiologico', 'estrutura-rede'];
+  campos.forEach(id => {
+    const campo = document.getElementById(id);
+    if (campo) {
+      campo.addEventListener('input', () => {
+        localStorage.setItem(id, campo.value);
+      });
+      campo.value = localStorage.getItem(id) || ''; // Recuperar dados
+    }
+  });
+}
