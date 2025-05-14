@@ -259,43 +259,74 @@ function addAction(eixoId) {
 }
 
 function generatePDF() {
-  // ... (Validação de campos mantida)
+  // Validação de campos obrigatórios (mantida)
+  const obrigatorios = {
+    'uf': 'Selecione a UF!',
+    'municipio-select': 'Selecione o município!',
+    'responsavel': 'Preencha o responsável!'
+  };
 
+  for (const [id, mensagem] of Object.entries(obrigatorios)) {
+    const campo = document.getElementById(id);
+    if (!campo.value.trim()) {
+      alert(mensagem);
+      campo.focus();
+      return;
+    }
+  }
+
+  // Configuração do PDF
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF('p', 'pt', 'a4');
-  let y = 40;
+  let y = 60; // Posição inicial Y
 
-  // ---- Funções Auxiliares Preservadas ----
+  // ---- Funções de Formatação Original ----
+  const addText = (text, options = {}) => {
+    const { bold = false, size = 12, spacingBefore = 0, spacingAfter = 16 } = options;
+    y += spacingBefore;
+    doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    doc.setFontSize(size);
+    
+    // Quebrar texto em linhas
+    const lines = doc.splitTextToSize(text, 500);
+    lines.forEach(line => {
+      if (y > doc.internal.pageSize.height - 40) {
+        doc.addPage();
+        y = 60;
+      }
+      doc.text(60, y, line);
+      y += spacingAfter;
+    });
+  };
+
   const addDivider = () => {
-    doc.setDrawColor(200);
-    doc.line(30, y, doc.internal.pageSize.getWidth() - 30, y);
+    if (y > doc.internal.pageSize.height - 40) {
+      doc.addPage();
+      y = 60;
+    }
+    doc.setDrawColor(180);
+    doc.line(60, y, doc.internal.pageSize.width - 60, y);
     y += 20;
   };
 
   const addFieldPair = (label, value) => {
-    doc.setFont('helvetica', 'bold');
-    doc.text(30, y, `${label}:`);
-    doc.setFont('helvetica', 'normal');
-    const lines = doc.splitTextToSize(value || 'Não preenchido', doc.internal.pageSize.getWidth() - 60);
-    lines.forEach((line, i) => {
-      if (y > doc.internal.pageSize.getHeight() - 20) {
-        doc.addPage();
-        y = 40;
-      }
-      doc.text(40, y + 15 + (i * 15), line); // Alinhamento à direita do label
-    });
-    y += (lines.length * 15) + 10;
+    // Label
+    addText(label + ":", { bold: true, size: 12, spacingBefore: 10 });
+    // Valor
+    addText(value || 'Não preenchido', { size: 12, spacingBefore: 4, spacingAfter: 12 });
   };
 
   // ---- Conteúdo do PDF ----
-  doc.setFontSize(16).setFont('helvetica', 'bold');
-  doc.text(30, y, "Plano de Ação - Programa Especial de Saúde do Rio Doce");
-  y += 30;
+  // Título
+  addText("Plano de Ação - Programa Especial de Saúde do Rio Doce", {
+    bold: true,
+    size: 16,
+    spacingAfter: 30
+  });
 
   // Seção 1: Informações Iniciais
   addDivider();
-  doc.setFontSize(14).text(30, y, "Informações Iniciais");
-  y += 20;
+  addText("Informações Iniciais", { bold: true, size: 14, spacingAfter: 20 });
   addFieldPair("Responsável", document.getElementById('responsavel').value);
   addFieldPair("Cargo", document.getElementById('cargo').value);
   addFieldPair("UF", document.getElementById('uf').value);
@@ -303,8 +334,7 @@ function generatePDF() {
 
   // Seção 2: Diagnóstico Situacional
   addDivider();
-  doc.setFontSize(14).text(30, y, "Diagnóstico Situacional");
-  y += 20;
+  addText("Diagnóstico Situacional", { bold: true, size: 14, spacingAfter: 20 });
   addFieldPair("Perfil socioeconômico", document.getElementById('perfil-socio').value);
   addFieldPair("Perfil epidemiológico", document.getElementById('perfil-epidemiologico').value);
   addFieldPair("Estrutura da rede", document.getElementById('estrutura-rede').value);
@@ -313,18 +343,16 @@ function generatePDF() {
   document.querySelectorAll('.section').forEach(section => {
     addDivider();
     const tituloEixo = section.querySelector('h2').textContent;
-    doc.setFontSize(14).text(30, y, tituloEixo);
-    y += 20;
+    addText(tituloEixo, { bold: true, size: 14, spacingAfter: 15 });
 
     section.querySelectorAll('.accordion-item').forEach(acao => {
       const tituloAcao = acao.querySelector('.accordion-header').textContent;
-      doc.setFont('helvetica', 'bold').text(35, y, `• ${tituloAcao}`);
-      y += 15;
+      addText(`• ${tituloAcao}`, { bold: true, spacingAfter: 10 });
 
       acao.querySelectorAll('label').forEach(label => {
         const campo = label.nextElementSibling;
         const valor = campo.value || campo.textContent || 'Não preenchido';
-        addFieldPair(label.textContent.replace(':', ''), valor); // Remove ":" do label
+        addFieldPair(label.textContent.replace(':', ''), valor);
       });
     });
   });
