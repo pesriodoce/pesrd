@@ -24,16 +24,10 @@
       <input type="text" id="cargo">
 
       <label for="uf">Unidade da Federação:</label>
-      <select id="uf" onchange="updateMunicipios(this.value)">
-        <option value="">Selecione</option>
-        <option value="ES">ES</option>
-        <option value="MG">MG</option>
-      </select>
+      <input type="text" id="uf" readonly>
 
       <label for="municipio-select">Município:</label>
-      <select id="municipio-select">
-        <option value="">Selecione a UF primeiro</option>
-      </select>
+      <input type="text" id="municipio-select" readonly>
     </section>
 
     <!-- DIAGNÓSTICO SITUACIONAL -->
