@@ -379,3 +379,11 @@ input:empty::before, textarea:empty::before {
   color: #999;
   font-style: italic;
 }
+
+input[readonly] {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  cursor: not-allowed;
+  padding: 10px;
+  border-radius: 6px;
+}
