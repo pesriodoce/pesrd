@@ -17,13 +17,19 @@ const FormManager = {
     this.setupFormPersistence();
   },
 
-  loadMunicipioData: function() {
-    const session = Auth.getCurrentSession();
-    if (session) {
+loadMunicipioData: function() {
+  const session = Auth.getCurrentSession();
+  if (session) {
+    // Força a atualização do select de municípios
+    Auth.updateMunicipios(session.uf);
+    
+    // Aguarda um ciclo de evento para garantir que o select foi atualizado
+    setTimeout(() => {
       document.getElementById('uf').value = session.uf;
       document.getElementById('municipio-select').value = session.codigo;
-    }
-  },
+    }, 50);
+  }
+},
 
   setupEixos: function() {
     const container = document.getElementById("eixos-container");
@@ -170,3 +176,28 @@ const FormManager = {
 };
 
 document.addEventListener('DOMContentLoaded', () => FormManager.init());
+
+// Modifique a função saveAllActions para incluir no localStorage geral
+saveAllActions: function() {
+  const actions = [];
+  
+  document.querySelectorAll('.accordion-item').forEach(action => {
+    const body = action.querySelector('.accordion-body');
+    if (!body) return;
+    
+    const actionData = {
+      eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
+      // ... coleta todos os campos como no exemplo anterior ...
+    };
+    
+    actions.push(actionData);
+  });
+  
+  // Salva junto com os outros dados do formulário
+  localStorage.setItem('form_actions', JSON.stringify(actions));
+  
+  // Atualiza também no objeto geral de persistência
+  const formData = JSON.parse(localStorage.getItem('form_data') || '{}');
+  formData.actions = actions;
+  localStorage.setItem('form_data', JSON.stringify(formData));
+}
