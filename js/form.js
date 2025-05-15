@@ -32,10 +32,11 @@ const FormManager = {
 
 loadMunicipioData: function() {
   try {
-    const session = Auth.getCurrentSession();
-    if (!session) {
-      console.warn("Nenhuma sessão ativa encontrada");
-      return;
+  const session = Auth.getCurrentSession();
+  if (!session) return;
+
+  document.getElementById('uf').value = session.uf;
+  document.getElementById('municipio-select').value = session.nome;
     }
 
     const ufField = document.getElementById('uf');
