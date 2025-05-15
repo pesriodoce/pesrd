@@ -89,44 +89,45 @@ const FormManager = {
       <div class="accordion-header" onclick="FormManager.toggleAccordion('${newId}')">Nova Ação</div>
 <div class="accordion-body" id="${newId}">
 
-  <label>Nome da ação:</label>
-  <input type="text" class="nome-acao">
+<label>Nome da ação:</label>
+<input type="text" class="nome-acao">
 
-  <label>Identificação do Problema:</label>
-  <textarea class="problema"></textarea>
-  
-  <label>Descrição da ação:</label>
-  <textarea class="descricao"></textarea>
-           
-  <label>Objetivos:</label>
-  <textarea class="objetivos"></textarea>
+<label>Identificação do Problema:</label>
+<textarea class="problema"></textarea>
 
-  <label>Itens previstos:</label>
-  <textarea class="itens"></textarea>
+<label>Descrição da ação:</label>
+<textarea class="descricao"></textarea>
 
-  <label>Tipo da Ação:</label>
-  <select class="tipo">
-    <option>Investimento</option>
-    <option>Custeio</option>
-  </select>
+<label>Objetivos:</label>
+<textarea class="objetivos"></textarea>
 
-  <label>Orçamento previsto:</label>
-  <input type="text" class="masked-currency" id="budget-${newId}">
+<label>Itens previstos:</label>
+<textarea class="itens"></textarea>
 
-  <label>Data de início:</label>
-  <input type="date" class="inicio">
+<label>Tipo da Ação:</label>
+<select class="tipo">
+  <option>Investimento</option>
+  <option>Custeio</option>
+</select>
 
-  <label>Data de conclusão:</label>
-  <input type="date" class="fim">
+<label>Orçamento previsto:</label>
+<input type="text" class="masked-currency" id="budget-${newId}">
 
-  <label>Indicador:</label>
-  <textarea class="indicador"></textarea>
+<label>Data de início:</label>
+<input type="date" class="inicio">
 
-  <label>Meta:</label>
-  <textarea class="meta"></textarea>
+<label>Data de conclusão:</label>
+<input type="date" class="fim">
 
-  <label>Observações:</label>
-  <textarea class="observacoes"></textarea>
+<label>Indicador:</label>
+<textarea class="indicador"></textarea>
+
+<label>Meta:</label>
+<textarea class="meta"></textarea>
+
+<label>Observações:</label>
+<textarea class="observacoes"></textarea>
+
 </div>
 
     `;
