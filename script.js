@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname.includes('formulario.html')) {
     const codigo = localStorage.getItem('municipioLogado');
     
-    if (codigo && municipiosAutorizados[codigo]) {
+    if (codigo && municipios[codigo]) {
       // Extrair UF (primeiros 2 caracteres)
       const uf = codigo.substring(0, 2); // Ex: "MG310110" → "MG"
       
       // Buscar nome do município
-      const municipio = municipiosAutorizados[codigo].nome; // Ex: "AIMORÉS"
+      const municipio = municipios[codigo].nome; // Ex: "AIMORÉS"
       
       // Preencher campos (IDs devem bater com o HTML!)
       document.getElementById('uf').value = uf;
@@ -393,3 +393,12 @@ function atualizarMunicipios(uf) {
 document.getElementById("uf").addEventListener("change", function(e) {
   atualizarMunicipios(e.target.value);
 });
+
+function checkLogin() {
+  const codigo = localStorage.getItem('municipioLogado');
+  // ... (código existente)
+  if (municipioLogado) {
+    municipioLogado.textContent = `Município: ${municipiosAutorizados[codigo].nome}`;
+  }
+}
+                          
