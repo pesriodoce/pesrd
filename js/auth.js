@@ -153,3 +153,9 @@ const Auth = {
 };
 
 document.addEventListener('DOMContentLoaded', () => Auth.init());
+
+// Exporta para acesso global
+if (!window.Auth) {
+  window.Auth = Auth;
+  console.log('Auth registrado no escopo global');
+}
