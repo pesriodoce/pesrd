@@ -294,3 +294,16 @@ input[readonly] {
     display: block !important;
   }
 }
+
+/* Garante que os campos readonly tenham aparência consistente */
+input[readonly], select[disabled] {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #555;
+}
+
+/* Destaque para campos obrigatórios */
+.required {
+  color: #d32f2f;
+  margin-left: 4px;
+}
