@@ -33,7 +33,7 @@ generatePDF: function () {
   ]);
 
   // Nova página paisagem para eixos
-  doc.addPage('a4', 'landscape');
+  doc.Page('a4', 'landscape');
   this.addEixosTable(doc);
 
   // Rodapé e paginação em todas as páginas
@@ -108,20 +108,21 @@ addEixosTable: function (doc) {
     section.querySelectorAll('.accordion-item').forEach(item => {
       const get = (selector) => item.querySelector(selector)?.value?.trim() || '';      
 
-      rows.push([
+    rows.push([
         get('.nome-acao'),
         get('.problema'),
         get('.descricao'),
         get('.objetivos'),
         get('.itens'),
-        get('select'),             // Tipo
-        get('.masked-currency'),   // Orçamento
-        get('input[type="date"]:nth-of-type(1)'), // Início
-        get('input[type="date"]:nth-of-type(2)'), // Fim
+        get('.tipo'),
+        get('.masked-currency'),
+        get('.inicio'),
+        get('.fim'),
         get('.indicador'),
         get('.meta'),
         get('.observacoes')
       ]);
+
     });
 
     if (rows.length) {
