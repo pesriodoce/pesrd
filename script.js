@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const municipioObj = municipios[uf].find(m => m.codigo === codigo);
       if (municipioObj) {
         document.getElementById('uf').value = uf;
-        document.getElementById('municipio-select').innerHTML = `<option value="${codigo}">${municipioObj.nome}</option>`;
+        atualizarMunicipios(uf); // repopular o select
         document.getElementById('municipio-select').value = codigo;
       }
     }
@@ -420,4 +420,8 @@ document.getElementById("uf").addEventListener("change", function(e) {
   atualizarMunicipios(e.target.value);
 });
 
+if (!uploadInput.files.length) {
+  alert("Selecione um arquivo antes de enviar.");
+  return;
+}
                          
