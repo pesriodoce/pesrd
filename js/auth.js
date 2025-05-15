@@ -121,27 +121,31 @@ const Auth = {
     }
   },
 
-  checkLogin: function() {
-    const session = JSON.parse(localStorage.getItem('session'));
-    const loginScreen = document.getElementById('login-screen');
-    const mainContent = document.getElementById('main-content');
-    const municipioLogado = document.getElementById('municipio-logado');
+checkLogin: function () {
+  const session = JSON.parse(localStorage.getItem('session'));
+  const loginScreen = document.getElementById('login-screen');
+  const mainContent = document.getElementById('main-content');
+  const municipioLogado = document.getElementById('municipio-logado');
 
-    if (session && this.municipios[session.uf]) {
-      if (loginScreen) loginScreen.style.display = 'none';
-      if (mainContent) mainContent.style.display = 'block';
-      if (municipioLogado) {
-        municipioLogado.textContent = `UF: ${session.uf} | Município: ${session.nome}`;
-      }
+  const isIndexPage = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
 
-// Redireciona automaticamente para o formulário
-window.location.href = "formulario.html";
-
-    } else {
-      if (loginScreen) loginScreen.style.display = 'flex';
-      if (mainContent) mainContent.style.display = 'none';
+  if (session && this.municipios[session.uf]) {
+    if (loginScreen) loginScreen.style.display = 'none';
+    if (mainContent) mainContent.style.display = 'block';
+    if (municipioLogado) {
+      municipioLogado.textContent = `UF: ${session.uf} | Município: ${session.nome}`;
     }
-  },
+
+    // ✅ Só redireciona se for a index
+    if (isIndexPage) {
+      window.location.href = "formulario.html";
+    }
+
+  } else {
+    if (loginScreen) loginScreen.style.display = 'flex';
+    if (mainContent) mainContent.style.display = 'none';
+  }
+},
 
   setupLogout: function() {
     const logoutBtn = document.querySelector('.btn-sair');
