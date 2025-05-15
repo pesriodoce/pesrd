@@ -9,13 +9,20 @@ const FormManager = {
     "Formação e educação permanente"
   ],
 
-  init: function() {
-    if (!document.getElementById('eixos-container')) return;
-    
-    this.loadMunicipioData();
-    this.setupEixos();
-    this.setupFormPersistence();
-  },
+init: function() {
+  if (!document.getElementById('eixos-container')) return;
+  
+  // Primeiro carrega os eixos
+  this.setupEixos();
+  
+  // Depois carrega os dados
+  this.loadMunicipioData();
+  this.loadSavedActions();
+  this.setupFormPersistence();
+  
+  // Garante que o container de eixos está visível
+  document.getElementById('eixos-container').style.display = 'block';
+},
 
 loadMunicipioData: function() {
   const session = Auth.getCurrentSession();
