@@ -133,6 +133,10 @@ const Auth = {
       if (municipioLogado) {
         municipioLogado.textContent = `UF: ${session.uf} | Município: ${session.nome}`;
       }
+
+// Redireciona automaticamente para o formulário
+window.location.href = "formulario.html";
+
     } else {
       if (loginScreen) loginScreen.style.display = 'flex';
       if (mainContent) mainContent.style.display = 'none';
