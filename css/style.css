@@ -309,5 +309,11 @@ input[readonly], select[disabled] {
 }
 
 #eixos-container {
-  display: block !important; /* Sobrescreve qualquer estilo que possa estar escondendo */
+  display: block;
+  margin-top: 20px;
+}
+
+.accordion {
+  display: block;
+  margin-top: 10px;
 }
