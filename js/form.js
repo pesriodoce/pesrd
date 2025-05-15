@@ -195,17 +195,22 @@ saveAllActions: function() {
     
     const actionData = {
       eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
-      // ... coleta todos os campos como no exemplo anterior ...
+      nome: body.querySelector('.nome-acao').value,
+      problema: body.querySelector('textarea:nth-of-type(1)').value,
+      descricao: body.querySelector('textarea:nth-of-type(2)').value,
+      objetivos: body.querySelector('textarea:nth-of-type(3)').value,
+      itens: body.querySelector('input[type="text"]:nth-of-type(1)').value,
+      tipo: body.querySelector('select').value,
+      orcamento: body.querySelector('.masked-currency').value,
+      dataInicio: body.querySelector('input[type="date"]:nth-of-type(1)').value,
+      dataConclusao: body.querySelector('input[type="date"]:nth-of-type(2)').value,
+      indicador: body.querySelector('input[type="text"]:nth-of-type(2)').value,
+      meta: body.querySelector('input[type="text"]:nth-of-type(3)').value,
+      observacoes: body.querySelector('textarea:nth-of-type(4)').value
     };
     
     actions.push(actionData);
   });
   
-  // Salva junto com os outros dados do formulário
   localStorage.setItem('form_actions', JSON.stringify(actions));
-  
-  // Atualiza também no objeto geral de persistência
-  const formData = JSON.parse(localStorage.getItem('form_data') || '{}');
-  formData.actions = actions;
-  localStorage.setItem('form_data', JSON.stringify(formData));
 }
