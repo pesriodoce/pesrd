@@ -214,3 +214,12 @@ saveAllActions: function() {
   
   localStorage.setItem('form_actions', JSON.stringify(actions));
 }
+
+init: function() {
+  console.log('Inicializando FormManager...');
+  if (!document.getElementById('eixos-container')) {
+    console.error('Container de eixos não encontrado!');
+    return;
+  }
+  // ... restante do código
+}
