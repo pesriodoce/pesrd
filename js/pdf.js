@@ -80,43 +80,51 @@ const PDFGenerator = {
     return y + 10;
   },
 
-  addEixosTable: function (doc, y) {
-    document.querySelectorAll('.section').forEach(section => {
-      const eixoTitulo = section.querySelector('h2')?.textContent || '';
-      const rows = [];
+addEixosTable: function (doc, y) {
+  // Inicia uma nova página em paisagem
+  doc.addPage('a4', 'landscape');
+  y = 40;
 
-      section.querySelectorAll('.accordion-item').forEach(item => {
-        const nome = item.querySelector('.nome-acao')?.value || 'Sem título';
-        const descricao = item.querySelector('textarea:nth-of-type(2)')?.value || '';
-        const tipo = item.querySelector('select')?.value || '';
-        const orcamento = item.querySelector('.masked-currency')?.value || '';
-        const inicio = item.querySelector('input[type="date"]:nth-of-type(1)')?.value || '';
-        const fim = item.querySelector('input[type="date"]:nth-of-type(2)')?.value || '';
+  document.querySelectorAll('.section').forEach(section => {
+    const eixoTitulo = section.querySelector('h2')?.textContent || '';
+    const rows = [];
 
-        rows.push([nome, descricao, tipo, orcamento, `${inicio} a ${fim}`]);
-      });
+    section.querySelectorAll('.accordion-item').forEach(item => {
+      const nome = item.querySelector('.nome-acao')?.value || 'Sem título';
+      const descricao = item.querySelector('textarea:nth-of-type(2)')?.value || '';
+      const tipo = item.querySelector('select')?.value || '';
+      const orcamento = item.querySelector('.masked-currency')?.value || '';
+      const inicio = item.querySelector('input[type="date"]:nth-of-type(1)')?.value || '';
+      const fim = item.querySelector('input[type="date"]:nth-of-type(2)')?.value || '';
 
-      if (rows.length) {
-        doc.setFontSize(12);
-        doc.text(eixoTitulo, 60, y);
-        y += 10;
-
-        doc.autoTable({
-          startY: y,
-          head: [['Nome da Ação', 'Descrição', 'Tipo', 'Orçamento', 'Período']],
-          body: rows,
-          margin: { left: 60, right: 40 },
-          theme: 'grid',
-          styles: { fontSize: 9, cellPadding: 4, overflow: 'linebreak' },
-          headStyles: { fillColor: [74, 104, 133] }
-        });
-
-        y = doc.lastAutoTable.finalY + 20;
-      }
+      rows.push([nome, descricao, tipo, orcamento, `${inicio} a ${fim}`]);
     });
 
-    return y;
-  }
+    if (rows.length) {
+      doc.setFontSize(12);
+      doc.text(eixoTitulo, 40, y);
+      y += 10;
+
+      doc.autoTable({
+        startY: y,
+        head: [['Nome da Ação', 'Descrição', 'Tipo', 'Orçamento', 'Período']],
+        body: rows,
+        margin: { left: 40, right: 40 },
+        theme: 'grid',
+        styles: {
+          fontSize: 9,
+          cellPadding: 4,
+          overflow: 'linebreak'
+        },
+        headStyles: { fillColor: [74, 104, 133] }
+      });
+
+      y = doc.lastAutoTable.finalY + 20;
+    }
+  });
+
+  return y;
+}
 };
 
 document.addEventListener('DOMContentLoaded', () => PDFGenerator.init());
