@@ -30,23 +30,25 @@ const FormManager = {
     console.log('FormManager inicializado com sucesso');
   },
 
-  loadMunicipioData: function() {
-    const session = Auth.getCurrentSession();
-    if (session) {
-      const ufField = document.getElementById('uf');
-      const municipioField = document.getElementById('municipio-select');
-      
-      if (ufField && municipioField) {
-        ufField.value = session.uf;
-        const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
-        if (municipioObj) {
-          municipioField.value = municipioObj.nome;
-        } else {
-          console.error('Município não encontrado para o código:', session.codigo);
-        }
-      }
-    }
-  },
+loadMunicipioData: function() {
+  const session = Auth.getCurrentSession();
+  if (!session) {
+    console.warn("Sessão não encontrada. UF e Município não serão preenchidos.");
+    return;
+  }
+
+  const ufField = document.getElementById('uf');
+  const municipioField = document.getElementById('municipio-select');
+
+  if (ufField) ufField.value = session.uf;
+
+  const municipioObj = Auth.municipios?.[session.uf]?.find(m => m.codigo === session.codigo);
+  if (municipioField && municipioObj) {
+    municipioField.value = municipioObj.nome;
+  } else {
+    console.warn("Município não encontrado ou campo #municipio-select inválido.");
+  }
+},
 
   setupEixos: function() {
     const container = document.getElementById("eixos-container");
