@@ -317,3 +317,17 @@ input[readonly], select[disabled] {
   display: block;
   margin-top: 10px;
 }
+
+textarea.problema,
+textarea.objetivos,
+textarea.descricao,
+textarea.itens,
+textarea.meta,
+textarea.indicador,
+textarea.observacoes {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
