@@ -6,7 +6,11 @@ const PDFGenerator = {
 generatePDF: function () {
   if (!this.validateRequiredFields()) return;
 
-  const { jsPDF } = window.jspdf;
+  const jsPDF = window.jsPDF;
+  if (!jsPDF) {
+    alert("Erro: jsPDF não foi carregado corretamente.");
+    return;
+  }
   const doc = new jsPDF('p', 'pt', 'a4');
 
   // Dados da sessão
