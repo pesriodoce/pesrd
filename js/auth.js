@@ -154,8 +154,30 @@ const Auth = {
 
 document.addEventListener('DOMContentLoaded', () => Auth.init());
 
-// Exporta para acesso global
-if (!window.Auth) {
-  window.Auth = Auth;
-  console.log('Auth registrado no escopo global');
-}
+
+// ---- Lógica de login (usada em index.html) ----
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const uf = document.getElementById("uf").value;
+      const municipio = document.getElementById("municipio-select").value;
+      const senha = document.getElementById("senha").value;
+
+      if (Auth.validarLogin(uf, municipio, senha)) {
+        Auth.login(uf, municipio);
+        window.location.href = "formulario.html";
+      } else {
+        alert("Preencha todos os campos corretamente para acessar o sistema.");
+      }
+    });
+  }
+
+  // Se estivermos no formulário, preenche UF e município
+  if (window.location.pathname.includes("formulario.html")) {
+    Auth.preencherCamposFormulario();
+  }
+});
