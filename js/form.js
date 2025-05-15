@@ -11,46 +11,44 @@ const FormManager = {
 
   init: function() {
     console.log('Inicializando FormManager...');
-    if (!document.getElementById('eixos-container')) {
+    const container = document.getElementById('eixos-container');
+    
+    if (!container) {
       console.error('Container de eixos não encontrado!');
       return;
     }
 
-    // 1. Primeiro carrega os dados da sessão
+    // 1. Carrega dados da sessão
     this.loadMunicipioData();
     
-    // 2. Cria a estrutura de eixos
+    // 2. Cria estrutura de eixos
     this.setupEixos();
     
     // 3. Configura persistência
     this.setupFormPersistence();
     
-    // Garante visibilidade
-    document.getElementById('eixos-container').style.display = 'block';
+    container.style.display = 'block';
     console.log('FormManager inicializado com sucesso');
   },
 
-loadMunicipioData: function() {
-  try {
-  const session = Auth.getCurrentSession();
-  if (!session) return;
-
-  document.getElementById('uf').value = session.uf;
-  document.getElementById('municipio-select').value = session.nome;
-    }
-
-    const ufField = document.getElementById('uf');
-    const municipioField = document.getElementById('municipio-select');
-    const emailField = document.getElementById('email');
-
-    if (ufField) ufField.value = session.uf;
-    
-    if (municipioField) {
-      const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
-      if (municipioObj) {
-        municipioField.value = municipioObj.nome;
+  loadMunicipioData: function() {
+    try {
+      const session = Auth.getCurrentSession();
+      if (!session) {
+        console.warn("Nenhuma sessão ativa encontrada");
+        return;
       }
+
+      const ufField = document.getElementById('uf');
+      const municipioField = document.getElementById('municipio-select');
+
+      if (ufField) ufField.value = session.uf;
+      if (municipioField) municipioField.value = session.nome;
+
+    } catch (error) {
+      console.error('Erro ao carregar dados do município:', error);
     }
+  },
 
     // Carrega email salvo se existir
     if (emailField) {
@@ -238,3 +236,4 @@ loadMunicipioData: function() {
 
 // APENAS UM event listener no final
 document.addEventListener('DOMContentLoaded', () => FormManager.init());
+
