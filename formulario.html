@@ -14,20 +14,20 @@
     <h1>Plano de Ação do Programa Especial de Saúde do Rio Doce</h1>
 
     <!-- INFORMAÇÕES INICIAIS -->
-    <section class="section" aria-labelledby="info-header">
-      <h2 id="info-header">Informações Iniciais</h2>
-      <label for="responsavel">Responsável pelo documento:</label>
-      <input type="text" id="responsavel" aria-required="true">
+<section class="section" aria-labelledby="info-header">
+  <h2 id="info-header">Informações Iniciais</h2>
+  <label for="responsavel">Responsável pelo documento: <span class="required">*</span></label>
+  <input type="text" id="responsavel" aria-required="true" required>
 
-      <label for="cargo">Cargo:</label>
-      <input type="text" id="cargo">
+  <label for="cargo">Cargo:</label>
+  <input type="text" id="cargo">
 
-      <label for="uf">Unidade da Federação:</label>
-      <input type="text" id="uf" readonly aria-readonly="true">
+  <label for="uf">Unidade da Federação: <span class="required">*</span></label>
+  <input type="text" id="uf" value="" readonly aria-readonly="true" required>
 
-      <label for="municipio-select">Município:</label>
-      <input type="text" id="municipio-select" readonly aria-readonly="true">
-    </section>
+  <label for="municipio">Município: <span class="required">*</span></label>
+  <input type="text" id="municipio" value="" readonly aria-readonly="true" required>
+</section>
 
     <!-- DIAGNÓSTICO SITUACIONAL -->
     <section class="section" aria-labelledby="diag-header">
