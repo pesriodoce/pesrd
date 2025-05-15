@@ -58,6 +58,28 @@ const municipios = {
  ]
 };
 
+// Função para atualizar municípios
+function atualizarMunicipios(uf) {
+  const select = document.getElementById("municipio-select");
+  select.innerHTML = "<option value=''>Selecione o município</option>";
+  
+  if (municipios[uf]) {
+    municipios[uf].forEach(m => {
+      const option = document.createElement("option");
+      option.value = m.codigo; 
+      option.textContent = m.nome;
+      select.appendChild(option);
+    });
+  }
+}
+
+// Evento para carregar municípios ao selecionar a UF
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById("uf").addEventListener("change", function(e) {
+    atualizarMunicipios(e.target.value);
+  });
+});
+
 // Inicialização segura
 document.addEventListener('DOMContentLoaded', function () {
   checkLogin();
