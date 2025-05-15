@@ -387,3 +387,18 @@ input[readonly] {
   padding: 10px;
   border-radius: 6px;
 }
+
+/* Estilize os selects */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+/* Remova estilos de autopreenchimento */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
