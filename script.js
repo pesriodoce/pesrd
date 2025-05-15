@@ -5,6 +5,7 @@ const municipios = {
     { codigo: "MG310180", nome: "ALPERCATA" },
     { codigo: "MG310570", nome: "BARRA LONGA" },
     { codigo: "MG310630", nome: "BELO ORIENTE" },
+    { codigo: "MG310620", nome: "BELO HORIZONTE" },
     { codigo: "MG310780", nome: "BOM JESUS DO GALHO" },
     { codigo: "MG310925", nome: "BUGRE" },
     { codigo: "MG311340", nome: "CARATINGA" },
@@ -52,6 +53,7 @@ const municipios = {
     { codigo: "ES320490", nome: "SÃO MATEUS" },
     { codigo: "ES320500", nome: "SERRA" },
     { codigo: "ES320501", nome: "SOORETAMA" },
+    { codigo: "ES320530", nome: "VITÓRIA" },
  ],
  DF: [
     { codigo: "DF530010", nome: "BRASÍLIA" }
