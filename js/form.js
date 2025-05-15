@@ -31,22 +31,32 @@ const FormManager = {
   },
 
 loadMunicipioData: function() {
-  const session = Auth.getCurrentSession();
-  if (!session) {
-    console.warn("Sessão não encontrada. UF e Município não serão preenchidos.");
-    return;
-  }
+  try {
+    const session = Auth.getCurrentSession();
+    if (!session) {
+      console.warn("Nenhuma sessão ativa encontrada");
+      return;
+    }
 
-  const ufField = document.getElementById('uf');
-  const municipioField = document.getElementById('municipio-select');
+    const ufField = document.getElementById('uf');
+    const municipioField = document.getElementById('municipio-select');
+    const emailField = document.getElementById('email');
 
-  if (ufField) ufField.value = session.uf;
+    if (ufField) ufField.value = session.uf;
+    
+    if (municipioField) {
+      const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
+      if (municipioObj) {
+        municipioField.value = municipioObj.nome;
+      }
+    }
 
-  const municipioObj = Auth.municipios?.[session.uf]?.find(m => m.codigo === session.codigo);
-  if (municipioField && municipioObj) {
-    municipioField.value = municipioObj.nome;
-  } else {
-    console.warn("Município não encontrado ou campo #municipio-select inválido.");
+    // Carrega email salvo se existir
+    if (emailField) {
+      emailField.value = localStorage.getItem('form_email') || '';
+    }
+  } catch (error) {
+    console.error('Erro ao carregar dados do município:', error);
   }
 },
 
