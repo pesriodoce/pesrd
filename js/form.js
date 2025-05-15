@@ -27,16 +27,13 @@ init: function() {
 loadMunicipioData: function() {
   const session = Auth.getCurrentSession();
   if (session) {
-    // Preenche diretamente os campos de texto
     document.getElementById('uf').value = session.uf;
     
-    // Encontra o nome do município correspondente ao código
-    const municipio = this.municipios[session.uf].find(m => m.codigo === session.codigo);
+    // Usar os municípios do Auth
+    const municipio = Auth.municipios[session.uf].find(m => m.codigo === session.codigo);
     if (municipio) {
       document.getElementById('municipio-select').value = municipio.nome;
     }
-    
-    // Remove a chamada para Auth.updateMunicipios que estava causando conflito
   }
 },
 
