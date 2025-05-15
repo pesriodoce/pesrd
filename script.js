@@ -144,10 +144,9 @@ function checkLogin() {
 // Logout
 function logout() {
   localStorage.removeItem('municipioLogado');
-  document.getElementById('codigo').value = '';
-  document.getElementById('senha').value = '';
-  checkLogin();
+  location.reload();
 }
+
 
 window.actionCount = 0;
 
