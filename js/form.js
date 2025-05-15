@@ -102,7 +102,7 @@ const FormManager = {
         <textarea></textarea>
 
         <label>Itens previstos:</label>
-        <input type="textarea">
+        <textarea></textarea>
 
         <label>Tipo da Ação:</label>
         <select>
@@ -120,10 +120,10 @@ const FormManager = {
         <input type="date">
 
         <label>Indicador:</label>
-        <input type="textarea">
+        <textarea></textarea>
 
         <label>Meta:</label>
-        <input type="textarea">
+        <textarea></textarea>
 
         <label>Observações:</label>
         <textarea></textarea>
@@ -208,13 +208,13 @@ const FormManager = {
         problema: body.querySelector('textarea:nth-of-type(1)')?.value || '',
         descricao: body.querySelector('textarea:nth-of-type(2)')?.value || '',
         objetivos: body.querySelector('textarea:nth-of-type(3)')?.value || '',
-        itens: body.querySelector('input[type="text"]:nth-of-type(1)')?.value || '',
+        itens: body.querySelector('textarea:nth-of-type(1)')?.value || '',
         tipo: body.querySelector('select')?.value || '',
         orcamento: body.querySelector('.masked-currency')?.value || '',
         dataInicio: body.querySelector('input[type="date"]:nth-of-type(1)')?.value || '',
         dataConclusao: body.querySelector('input[type="date"]:nth-of-type(2)')?.value || '',
-        indicador: body.querySelector('input[type="text"]:nth-of-type(2)')?.value || '',
-        meta: body.querySelector('input[type="text"]:nth-of-type(3)')?.value || '',
+        indicador: body.querySelector('textarea:nth-of-type(2)')?.value || '',
+        meta: body.querySelector('textarea:nth-of-type(3)')?.value || '',
         observacoes: body.querySelector('textarea:nth-of-type(4)')?.value || ''
       };
       
