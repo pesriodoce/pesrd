@@ -10,31 +10,45 @@ const FormManager = {
   ],
 
 init: function() {
-  if (!document.getElementById('eixos-container')) return;
-  
-  // Carrega primeiro os dados da sessão
+  if (!document.getElementById('eixos-container')) {
+    console.error('Container de eixos não encontrado no DOM');
+    return;
+  }
+
+  // 1. Primeiro carrega os dados da sessão
   this.loadMunicipioData();
   
-  // Depois cria os eixos
+  // 2. Cria a estrutura de eixos
   this.setupEixos();
   
-  // Finalmente carrega as ações salvas
+  // 3. Carrega ações salvas
   this.loadSavedActions();
+  
+  // 4. Configura persistência
   this.setupFormPersistence();
   
-  // Força exibição do container
+  // Garante visibilidade
   document.getElementById('eixos-container').style.display = 'block';
+  console.log('FormManager inicializado com sucesso');
 },
 
 loadMunicipioData: function() {
   const session = Auth.getCurrentSession();
   if (session) {
-    document.getElementById('uf').value = session.uf;
+    // Garante que os campos existem antes de preencher
+    const ufField = document.getElementById('uf');
+    const municipioField = document.getElementById('municipio-select');
     
-    // Usar os municípios do Auth
-    const municipio = Auth.municipios[session.uf].find(m => m.codigo === session.codigo);
-    if (municipio) {
-      document.getElementById('municipio-select').value = municipio.nome;
+    if (ufField && municipioField) {
+      ufField.value = session.uf;
+      
+      // Busca o nome do município na estrutura de dados do Auth
+      const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
+      if (municipioObj) {
+        municipioField.value = municipioObj.nome;
+      } else {
+        console.error('Município não encontrado para o código:', session.codigo);
+      }
     }
   }
 },
