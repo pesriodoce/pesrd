@@ -12,15 +12,17 @@ const FormManager = {
 init: function() {
   if (!document.getElementById('eixos-container')) return;
   
-  // Primeiro carrega os eixos
+  // Carrega primeiro os dados da sessão
+  this.loadMunicipioData();
+  
+  // Depois cria os eixos
   this.setupEixos();
   
-  // Depois carrega os dados
-  this.loadMunicipioData();
+  // Finalmente carrega as ações salvas
   this.loadSavedActions();
   this.setupFormPersistence();
   
-  // Garante que o container de eixos está visível
+  // Força exibição do container
   document.getElementById('eixos-container').style.display = 'block';
 },
 
