@@ -15,16 +15,17 @@
       action="https://formsubmit.co/saude.riodoce@saude.gov.br"
       method="POST"
       enctype="multipart/form-data"
-      target="invisibleIframe"
+      target="hiddenFrame"
       class="upload-area"
       aria-labelledby="upload-heading">
 
-      <!-- Configurações do FormSubmit -->
+      <!-- Campos ocultos para configuração -->
       <input type="hidden" name="_subject" value="Plano Aprovado - Sistema PES Rio Doce">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="box">
-      <input type="hidden" name="_next" value="envio.html"> <!-- opcional, mas neutro -->
+      <input type="hidden" name="_next" value="envio.html">
 
+      <!-- Upload -->
       <label for="pdfUpload" class="upload-label" tabindex="0" role="button">
         <svg width="50" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         <p>Clique para selecionar o PDF aprovado</p>
@@ -37,15 +38,15 @@
       <button type="button" class="btn-voltar" onclick="window.location.href='index.html'">Voltar ao Dashboard</button>
     </form>
 
-    <!-- Mensagem de confirmação -->
+    <!-- Mensagem de sucesso -->
     <p id="successMessage" style="display:none; color: green; margin-top: 20px;">📄 PDF enviado com sucesso!</p>
 
-    <!-- iframe oculto -->
-    <iframe name="invisibleIframe" style="display:none;" onload="mostrarMensagem()"></iframe>
+    <!-- iframe oculto para envio -->
+    <iframe name="hiddenFrame" style="display: none;"></iframe>
   </main>
 
   <script>
-    // Exibe nome do arquivo ao selecionar
+    // Exibe nome do arquivo selecionado
     document.getElementById("pdfUpload").addEventListener("change", function () {
       const fileName = document.getElementById("fileName");
       if (this.files.length > 0) {
@@ -55,18 +56,14 @@
       }
     });
 
-    // Mostra mensagem de sucesso após envio via iframe
-    function mostrarMensagem() {
-      const msg = document.getElementById("successMessage");
-      const fileInput = document.getElementById("pdfUpload");
-      const fileName = document.getElementById("fileName");
-
-      if (fileInput.files.length > 0) {
-        msg.style.display = "block";
-        fileName.textContent = "";
-        fileInput.value = ""; // limpa o campo de upload
-      }
-    }
+    // Após envio, espera e exibe a mensagem
+    document.getElementById("uploadForm").addEventListener("submit", function () {
+      setTimeout(() => {
+        document.getElementById("successMessage").style.display = "block";
+        document.getElementById("pdfUpload").value = "";
+        document.getElementById("fileName").textContent = "";
+      }, 2000); // tempo para o envio via FormSubmit ser concluído
+    });
   </script>
 </body>
 </html>
