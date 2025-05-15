@@ -106,21 +106,21 @@ addEixosTable: function (doc) {
     const rows = [];
 
     section.querySelectorAll('.accordion-item').forEach(item => {
-      const getValue = (selector) => item.querySelector(selector)?.value || '';
+      const get = (selector) => item.querySelector(selector)?.value?.trim() || '';      
 
       rows.push([
-        getValue('.nome-acao'),
-        getValue('textarea:nth-of-type(1)'), // Problema
-        getValue('textarea:nth-of-type(2)'), // Descrição
-        getValue('textarea:nth-of-type(3)'), // Objetivos
-        getValue('input[type="text"]:nth-of-type(1)'), // Itens
-        getValue('select'), // Tipo
-        getValue('.masked-currency'), // Orçamento
-        getValue('input[type="date"]:nth-of-type(1)'), // Início
-        getValue('input[type="date"]:nth-of-type(2)'), // Fim
-        getValue('input[type="text"]:nth-of-type(2)'), // Indicador
-        getValue('input[type="text"]:nth-of-type(3)'), // Meta
-        getValue('textarea:nth-of-type(4)') // Observações
+        get('.nome-acao'),
+        get('.problema'),
+        get('.descricao'),
+        get('.objetivos'),
+        get('.itens'),
+        get('select'),             // Tipo
+        get('.masked-currency'),   // Orçamento
+        get('input[type="date"]:nth-of-type(1)'), // Início
+        get('input[type="date"]:nth-of-type(2)'), // Fim
+        get('.indicador'),
+        get('.meta'),
+        get('.observacoes')
       ]);
     });
 
@@ -132,18 +132,9 @@ addEixosTable: function (doc) {
       doc.autoTable({
         startY: y,
         head: [[
-          'Nome da Ação',
-          'Problema',
-          'Descrição',
-          'Objetivos',
-          'Itens',
-          'Tipo',
-          'Orçamento',
-          'Início',
-          'Conclusão',
-          'Indicador',
-          'Meta',
-          'Observações'
+          'Nome da Ação', 'Problema', 'Descrição', 'Objetivos',
+          'Itens', 'Tipo', 'Orçamento', 'Início',
+          'Conclusão', 'Indicador', 'Meta', 'Observações'
         ]],
         body: rows,
         margin: { left: 40, right: 40 },
