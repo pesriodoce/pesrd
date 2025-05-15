@@ -6,28 +6,43 @@
   <title>Enviar Plano Aprovado</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; connect-src https://formsubmit.co;">
 </head>
 <body>
   <main class="form-container" role="main">
-    <h1>Enviar Plano Aprovado</h1>
-    
-    <div class="upload-area" id="uploadArea" role="region" aria-labelledby="upload-heading">
+    <h1>Enviar documento Aprovado</h1>
+
+    <form action="https://formsubmit.co/tiago.magalhaes@saude.gov.br" method="POST" enctype="multipart/form-data" class="upload-area" aria-labelledby="upload-heading">
       <h2 id="upload-heading" class="sr-only">Área de Upload</h2>
-      <input type="file" id="pdfUpload" accept=".pdf" style="display: none;" aria-label="Selecionar arquivo PDF">
+
+      <!-- Configurações do FormSubmit -->
+      <input type="hidden" name="_subject" value="Plano Aprovado - Sistema PES Rio Doce">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="box">
+
+      <!-- Upload -->
       <label for="pdfUpload" class="upload-label" tabindex="0" role="button">
         <svg width="50" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <p>Clique para selecionar o PDF aprovado</p>
+        <p>Clique para selecionar o documento aprovado (PDF)</p>
         <small>O arquivo deve conter a anuência do Conselho Municipal de Saúde</small>
       </label>
+      <input type="file" name="uploaded_file" id="pdfUpload" accept=".pdf" required style="display: none;">
       <p id="fileName" aria-live="polite"></p>
-    </div>
 
-    <button id="btn-enviar" class="btn-primary" disabled>Enviar para tiago.magalhaes@saude.gov.br</button>
-    <button class="btn-voltar" onclick="window.history.back()">Voltar ao Dashboard</button>
+      <!-- Botões -->
+      <button type="submit" class="btn-primary">Enviar PDF</button>
+      <button type="button" class="btn-voltar" onclick="window.location.href='index.html'">Voltar ao Dashboard</button>
+    </form>
   </main>
 
-  <script src="js/auth.js"></script>
-  <script src="js/upload.js"></script>
+  <script>
+    document.getElementById("pdfUpload").addEventListener("change", function () {
+      const fileName = document.getElementById("fileName");
+      if (this.files.length > 0) {
+        fileName.textContent = "Arquivo selecionado: " + this.files[0].name;
+      } else {
+        fileName.textContent = "";
+      }
+    });
+  </script>
 </body>
 </html>
