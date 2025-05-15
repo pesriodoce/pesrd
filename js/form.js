@@ -87,47 +87,48 @@ const FormManager = {
 
     newAction.innerHTML = `
       <div class="accordion-header" onclick="FormManager.toggleAccordion('${newId}')">Nova Ação</div>
-      <div class="accordion-body" id="${newId}">
+<div class="accordion-body" id="${newId}">
 
-        <label>Nome da ação:</label>
-        <input type="text" class="nome-acao">
+  <label>Nome da ação:</label>
+  <input type="text" class="nome-acao">
 
-        <label>Identificação do Problema:</label>
-        <textarea></textarea>
-        
-        <label>Descrição da ação:</label>
-        <textarea></textarea>
+  <label>Identificação do Problema:</label>
+  <textarea class="problema"></textarea>
+  
+  <label>Descrição da ação:</label>
+  <textarea class="descricao"></textarea>
+           
+  <label>Objetivos:</label>
+  <textarea class="objetivos"></textarea>
 
-        <label>Objetivos:</label>
-        <textarea></textarea>
+  <label>Itens previstos:</label>
+  <textarea class="itens"></textarea>
 
-        <label>Itens previstos:</label>
-        <textarea></textarea>
+  <label>Tipo da Ação:</label>
+  <select class="tipo">
+    <option>Investimento</option>
+    <option>Custeio</option>
+  </select>
 
-        <label>Tipo da Ação:</label>
-        <select>
-          <option>Investimento</option>
-          <option>Custeio</option>
-        </select>
+  <label>Orçamento previsto:</label>
+  <input type="text" class="masked-currency" id="budget-${newId}">
 
-        <label>Orçamento previsto:</label>
-        <input type="text" class="masked-currency" id="budget-${newId}">
+  <label>Data de início:</label>
+  <input type="date" class="inicio">
 
-        <label>Data de início:</label>
-        <input type="date">
+  <label>Data de conclusão:</label>
+  <input type="date" class="fim">
 
-        <label>Data de conclusão:</label>
-        <input type="date">
+  <label>Indicador:</label>
+  <textarea class="indicador"></textarea>
 
-        <label>Indicador:</label>
-        <textarea></textarea>
+  <label>Meta:</label>
+  <textarea class="meta"></textarea>
 
-        <label>Meta:</label>
-        <textarea></textarea>
+  <label>Observações:</label>
+  <textarea class="observacoes"></textarea>
+</div>
 
-        <label>Observações:</label>
-        <textarea></textarea>
-      </div>
     `;
 
     eixo.appendChild(newAction);
