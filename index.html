@@ -14,12 +14,27 @@
     <div class="form-container">
       <h1>Acesso ao Sistema</h1>
       <form id="loginForm">
-        <label for="codigo">Login:</label>
-        <input type="text" id="codigo" required placeholder="MG310110">
-        
+        <!-- Remova o campo de código -->
+        <label for="uf">UF:</label>
+        <select id="uf" required>
+          <option value="">Selecione a UF</option>
+          <option value="DF">DF</option>
+          <option value="ES">ES</option>
+          <option value="MG">MG</option>
+        </select>
+
+        <label for="municipio-select">Município:</label>
+        <select id="municipio-select" required>
+          <option value="">Selecione a UF primeiro</option>
+        </select>
+
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" required placeholder="PESRD2025">
-        
+        <input type="password" id="senha" required>
+
+        <button type="submit" class="btn-acessar">Acessar</button>
+      </form>
+    </div>
+         
         <button type="submit" class="btn-acessar">Acessar</button>
       </form>
     </div>
