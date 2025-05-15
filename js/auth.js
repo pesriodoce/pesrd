@@ -121,13 +121,11 @@ const Auth = {
     }
   },
 
-checkLogin: function () {
+checkLogin: function() {
   const session = JSON.parse(localStorage.getItem('session'));
   const loginScreen = document.getElementById('login-screen');
   const mainContent = document.getElementById('main-content');
   const municipioLogado = document.getElementById('municipio-logado');
-
-  const isIndexPage = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
 
   if (session && this.municipios[session.uf]) {
     if (loginScreen) loginScreen.style.display = 'none';
@@ -136,11 +134,11 @@ checkLogin: function () {
       municipioLogado.textContent = `UF: ${session.uf} | Município: ${session.nome}`;
     }
 
-    // ✅ Só redireciona se for a index
-    if (isIndexPage) {
-      window.location.href = "formulario.html";
+    // Preenche os campos no formulário.html
+    if (window.location.pathname.includes('formulario.html')) {
+      document.getElementById('uf').value = session.uf;
+      document.getElementById('municipio-select').value = session.nome;
     }
-
   } else {
     if (loginScreen) loginScreen.style.display = 'flex';
     if (mainContent) mainContent.style.display = 'none';
