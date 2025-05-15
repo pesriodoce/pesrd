@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Preencher Plano de Ação</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- Adicione para CORS -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; connect-src https://formsubmit.co;">
 </head>
 <body>
@@ -18,39 +17,41 @@
     <section class="section" aria-labelledby="info-header">
       <h2 id="info-header">Informações Iniciais</h2>
       <label for="responsavel">Responsável pelo documento:</label>
-      <input type="text" id="responsavel">
+      <input type="text" id="responsavel" aria-required="true">
 
       <label for="cargo">Cargo:</label>
       <input type="text" id="cargo">
 
       <label for="uf">Unidade da Federação:</label>
-      <input type="text" id="uf" readonly>
+      <input type="text" id="uf" readonly aria-readonly="true">
 
       <label for="municipio-select">Município:</label>
-      <input type="text" id="municipio-select" readonly>
+      <input type="text" id="municipio-select" readonly aria-readonly="true">
     </section>
 
     <!-- DIAGNÓSTICO SITUACIONAL -->
     <section class="section" aria-labelledby="diag-header">
       <h2 id="diag-header">Diagnóstico Situacional de Saúde</h2>
       <label for="perfil-socio">Perfil socioeconômico, produtivo e demográfico do território:</label>
-      <textarea id="perfil-socio"></textarea>
+      <textarea id="perfil-socio" rows="4"></textarea>
 
       <label for="perfil-epidemiologico">Perfil epidemiológico do território:</label>
-      <textarea id="perfil-epidemiologico"></textarea>
+      <textarea id="perfil-epidemiologico" rows="4"></textarea>
 
       <label for="estrutura-rede">Estrutura da rede de saúde:</label>
-      <textarea id="estrutura-rede"></textarea>
+      <textarea id="estrutura-rede" rows="4"></textarea>
     </section>
 
     <!-- EIXOS DINÂMICOS -->
-    <section id="eixos-container"></section>
+    <section id="eixos-container" aria-live="polite"></section>
 
     <!-- BOTÕES -->
-    <button id="generate-pdf" onclick="generatePDF()">Gerar PDF para Aprovação</button>
+    <button id="generate-pdf" class="btn-primary">Gerar PDF para Aprovação</button>
     <button class="btn-voltar" onclick="window.location.href='index.html'">Voltar ao Dashboard</button>
   </main>
 
-  <script src="script.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/pdf.js"></script>
 </body>
 </html>
