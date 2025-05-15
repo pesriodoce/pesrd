@@ -9,33 +9,43 @@
 </head>
 <body>
   <main class="form-container" role="main">
-    <h1>Enviar documento Aprovado</h1>
+    <h1>Enviar Plano Aprovado</h1>
 
-    <form action="https://formsubmit.co/pesriodoce@gmail.com" method="POST" enctype="multipart/form-data" class="upload-area" aria-labelledby="upload-heading">
-      <h2 id="upload-heading" class="sr-only">Área de Upload</h2>
+    <form id="uploadForm"
+      action="https://formsubmit.co/saude.riodoce@saude.gov.br"
+      method="POST"
+      enctype="multipart/form-data"
+      target="invisibleIframe"
+      class="upload-area"
+      aria-labelledby="upload-heading">
 
       <!-- Configurações do FormSubmit -->
       <input type="hidden" name="_subject" value="Plano Aprovado - Sistema PES Rio Doce">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="box">
+      <input type="hidden" name="_next" value="envio.html"> <!-- opcional, mas neutro -->
 
-      <!-- Upload -->
       <label for="pdfUpload" class="upload-label" tabindex="0" role="button">
         <svg width="50" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <p>Clique para selecionar o documento aprovado (PDF)</p>
+        <p>Clique para selecionar o PDF aprovado</p>
         <small>O arquivo deve conter a anuência do Conselho Municipal de Saúde</small>
       </label>
       <input type="file" name="uploaded_file" id="pdfUpload" accept=".pdf" required style="display: none;">
       <p id="fileName" aria-live="polite"></p>
 
-      <!-- Botões -->
       <button type="submit" class="btn-primary">Enviar PDF</button>
       <button type="button" class="btn-voltar" onclick="window.location.href='index.html'">Voltar ao Dashboard</button>
-      <input type="hidden" name="_next" value="envio.html">
     </form>
+
+    <!-- Mensagem de confirmação -->
+    <p id="successMessage" style="display:none; color: green; margin-top: 20px;">📄 PDF enviado com sucesso!</p>
+
+    <!-- iframe oculto -->
+    <iframe name="invisibleIframe" style="display:none;" onload="mostrarMensagem()"></iframe>
   </main>
 
   <script>
+    // Exibe nome do arquivo ao selecionar
     document.getElementById("pdfUpload").addEventListener("change", function () {
       const fileName = document.getElementById("fileName");
       if (this.files.length > 0) {
@@ -44,6 +54,19 @@
         fileName.textContent = "";
       }
     });
+
+    // Mostra mensagem de sucesso após envio via iframe
+    function mostrarMensagem() {
+      const msg = document.getElementById("successMessage");
+      const fileInput = document.getElementById("pdfUpload");
+      const fileName = document.getElementById("fileName");
+
+      if (fileInput.files.length > 0) {
+        msg.style.display = "block";
+        fileName.textContent = "";
+        fileInput.value = ""; // limpa o campo de upload
+      }
+    }
   </script>
 </body>
 </html>
