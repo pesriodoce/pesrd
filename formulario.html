@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preencher Plano de Ação</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; connect-src https://formsubmit.co;">
+</head>
+<body>
+  <main class="form-container" role="main">
+    <h1>Plano de Ação do Programa Especial de Saúde do Rio Doce</h1>
+
+    <!-- INFORMAÇÕES INICIAIS -->
+<section class="section" aria-labelledby="info-header">
+  <h2 id="info-header">Informações Iniciais</h2>
+
+  <label for="responsavel">Responsável pelo documento: <span class="required">*</span></label>
+  <input type="text" id="responsavel" aria-required="true" required>
+
+  <label for="cargo">Cargo:</label>
+  <input type="text" id="cargo">
+
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" placeholder="Digite seu e-mail" required>
+
+  <label for="uf">Unidade da Federação:</label>
+  <input type="text" id="uf" readonly>
+
+  <label for="municipio">Município:</label>
+  <input type="text" id="municipio-select" readonly>
+</section>
+
+
+    <!-- DIAGNÓSTICO SITUACIONAL -->
+    <section class="section" aria-labelledby="diag-header">
+      <h2 id="diag-header">Diagnóstico Situacional de Saúde</h2>
+      <label for="perfil-socio">Perfil socioeconômico, produtivo e demográfico do território:</label>
+      <textarea id="perfil-socio" rows="4"></textarea>
+
+      <label for="perfil-epidemiologico">Perfil epidemiológico do território:</label>
+      <textarea id="perfil-epidemiologico" rows="4"></textarea>
+
+      <label for="estrutura-rede">Estrutura da rede de saúde:</label>
+      <textarea id="estrutura-rede" rows="4"></textarea>
+    </section>
+
+    <!-- EIXOS DINÂMICOS -->
+    <section id="eixos-container" class="section" aria-live="polite"></section>
+
+    <!-- BOTÕES -->
+    <button id="generate-pdf" class="btn-primary">Imprimir (Gerar PDF)</button>
+    <button class="btn-voltar" onclick="window.location.href='index.html'">Voltar ao Dashboard</button>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/pdf.js"></script>
+</body>
+</html>

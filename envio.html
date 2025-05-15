@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar Plano Aprovado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="form-container" role="main">
+    <h1>Enviar Plano Aprovado</h1>
+
+    <form id="uploadForm"
+      action="https://formsubmit.co/pesriodoce@gmail.com"
+      method="POST"
+      enctype="multipart/form-data"
+      target="hiddenFrame"
+      class="upload-area"
+      aria-labelledby="upload-heading">
+
+      <!-- Campos ocultos para configuração -->
+      <input type="hidden" name="_subject" value="Plano Aprovado - Sistema PES Rio Doce">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="box">
+      <input type="hidden" name="_next" value="envio.html">
+
+      <!-- Upload -->
+      <label for="pdfUpload" class="upload-label" tabindex="0" role="button">
+        <svg width="50" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        <p>Clique para selecionar o PDF aprovado</p>
+        <small>O arquivo deve conter a anuência do Conselho Municipal de Saúde</small>
+      </label>
+      <input type="file" name="uploaded_file" id="pdfUpload" accept=".pdf" required style="display: none;">
+      <p id="fileName" aria-live="polite"></p>
+
+      <button type="submit" class="btn-primary">Enviar PDF</button>
+      <button type="button" class="btn-voltar" onclick="window.location.href='index.html'">Voltar ao Dashboard</button>
+    </form>
+
+    <!-- Mensagem de sucesso -->
+    <p id="successMessage" style="display:none; color: green; margin-top: 20px;">📄 PDF enviado com sucesso! O parecer será enviado ao e-mail informado no plano de ação.</p>
+
+    <!-- iframe oculto para envio -->
+    <iframe name="hiddenFrame" style="display: none;"></iframe>
+  </main>
+
+  <script>
+    // Exibe nome do arquivo selecionado
+    document.getElementById("pdfUpload").addEventListener("change", function () {
+      const fileName = document.getElementById("fileName");
+      if (this.files.length > 0) {
+        fileName.textContent = "Arquivo selecionado: " + this.files[0].name;
+      } else {
+        fileName.textContent = "";
+      }
+    });
+
+    // Após envio, espera e exibe a mensagem
+    document.getElementById("uploadForm").addEventListener("submit", function () {
+      setTimeout(() => {
+        document.getElementById("successMessage").style.display = "block";
+        document.getElementById("pdfUpload").value = "";
+        document.getElementById("fileName").textContent = "";
+      }, 2000); // tempo para o envio via FormSubmit ser concluído
+    });
+  </script>
+</body>
+</html>
