@@ -17,7 +17,7 @@ const FormManager = {
     }
 
     // 1. Primeiro carrega os dados da sessão
-    document.getElementById('municipio-select').value = session.nome;
+    this.loadMunicipioData();
     
     // 2. Cria a estrutura de eixos
     this.setupEixos();
