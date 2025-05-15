@@ -22,10 +22,7 @@ const FormManager = {
     // 2. Cria a estrutura de eixos
     this.setupEixos();
     
-    // 3. Carrega ações salvas
-    this.loadSavedActions();
-    
-    // 4. Configura persistência
+    // 3. Configura persistência
     this.setupFormPersistence();
     
     // Garante visibilidade
