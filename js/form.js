@@ -20,14 +20,16 @@ const FormManager = {
 loadMunicipioData: function() {
   const session = Auth.getCurrentSession();
   if (session) {
-    // Força a atualização do select de municípios
-    Auth.updateMunicipios(session.uf);
+    // Preenche diretamente os campos de texto
+    document.getElementById('uf').value = session.uf;
     
-    // Aguarda um ciclo de evento para garantir que o select foi atualizado
-    setTimeout(() => {
-      document.getElementById('uf').value = session.uf;
-      document.getElementById('municipio-select').value = session.codigo;
-    }, 50);
+    // Encontra o nome do município correspondente ao código
+    const municipio = this.municipios[session.uf].find(m => m.codigo === session.codigo);
+    if (municipio) {
+      document.getElementById('municipio-select').value = municipio.nome;
+    }
+    
+    // Remove a chamada para Auth.updateMunicipios que estava causando conflito
   }
 },
 
