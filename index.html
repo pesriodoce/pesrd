@@ -6,17 +6,16 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; connect-src https://formsubmit.co;">
   <title>PES Rio Doce - Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <!-- Tela de Login -->
   <div id="login-screen" class="login-container">
     <div class="form-container">
       <h1>Acesso ao Sistema</h1>
-      <form id="loginForm">
-        <!-- Remova o campo de código -->
+      <form id="loginForm" aria-labelledby="login-heading">
         <label for="uf">UF:</label>
-        <select id="uf" required>
+        <select id="uf" required aria-required="true">
           <option value="">Selecione a UF</option>
           <option value="DF">DF</option>
           <option value="ES">ES</option>
@@ -24,39 +23,40 @@
         </select>
 
         <label for="municipio-select">Município:</label>
-        <select id="municipio-select" required>
+        <select id="municipio-select" required aria-required="true">
           <option value="">Selecione a UF primeiro</option>
         </select>
 
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" required>
+        <input type="password" id="senha" required aria-required="true">
 
         <button type="submit" class="btn-acessar">Acessar</button>
       </form>
     </div>
-         
+  </div>
+
   <!-- Dashboard -->
-  <main class="dashboard-container" id="main-content">
+  <main class="dashboard-container" id="main-content" aria-hidden="true">
     <header>
       <h1>Programa Especial de Saúde do Rio Doce</h1>
-      <p id="municipio-logado"></p>
+      <p id="municipio-logado" aria-live="polite"></p>
     </header>
 
     <div class="card-container">
-      <div class="card" onclick="window.location.href='formulario.html'">
+      <div class="card" onclick="window.location.href='formulario.html'" role="button" tabindex="0" aria-label="Preencher Plano de Ação">
         <h2>Preencher Plano de Ação</h2>
         <p>Elaborar ou editar o plano municipal</p>
       </div>
 
-      <div class="card" onclick="window.location.href='envio.html'">
+      <div class="card" onclick="window.location.href='envio.html'" role="button" tabindex="0" aria-label="Enviar Plano Aprovado">
         <h2>Enviar Plano Aprovado</h2>
         <p>Upload do PDF com anuência do CMS</p>
       </div>
     </div>
 
-    <button class="btn-sair" onclick="logout()">Sair</button>
+    <button class="btn-sair" onclick="Auth.logout()">Sair</button>
   </main>
 
-  <script src="script.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
