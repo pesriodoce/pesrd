@@ -155,7 +155,7 @@ addEixosTable: function (doc) {
       y = doc.lastAutoTable.finalY + 20;
     }
   });
-}
+},
 
 
 addFooter: function (doc, pageNumber, totalPages, uf, municipio, data) {
