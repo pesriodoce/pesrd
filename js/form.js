@@ -9,28 +9,29 @@ const FormManager = {
     "Formação e educação permanente"
   ],
 
-init: function() {
-  if (!document.getElementById('eixos-container')) {
-    console.error('Container de eixos não encontrado no DOM');
-    return;
-  }
+  init: function() {
+    console.log('Inicializando FormManager...');
+    if (!document.getElementById('eixos-container')) {
+      console.error('Container de eixos não encontrado!');
+      return;
+    }
 
-  // 1. Primeiro carrega os dados da sessão
-  this.loadMunicipioData();
-  
-  // 2. Cria a estrutura de eixos
-  this.setupEixos();
-  
-  // 3. Carrega ações salvas
-  this.loadSavedActions();
-  
-  // 4. Configura persistência
-  this.setupFormPersistence();
-  
-  // Garante visibilidade
-  document.getElementById('eixos-container').style.display = 'block';
-  console.log('FormManager inicializado com sucesso');
-},
+    // 1. Primeiro carrega os dados da sessão
+    this.loadMunicipioData();
+    
+    // 2. Cria a estrutura de eixos
+    this.setupEixos();
+    
+    // 3. Carrega ações salvas
+    this.loadSavedActions();
+    
+    // 4. Configura persistência
+    this.setupFormPersistence();
+    
+    // Garante visibilidade
+    document.getElementById('eixos-container').style.display = 'block';
+    console.log('FormManager inicializado com sucesso');
+  },
 
 loadMunicipioData: function() {
   const session = Auth.getCurrentSession();
@@ -199,35 +200,34 @@ loadMunicipioData: function() {
 
 document.addEventListener('DOMContentLoaded', () => FormManager.init());
 
-// Modifique a função saveAllActions para incluir no localStorage geral
-saveAllActions: function() {
-  const actions = [];
-  
-  document.querySelectorAll('.accordion-item').forEach(action => {
-    const body = action.querySelector('.accordion-body');
-    if (!body) return;
+  saveAllActions: function() {
+    const actions = [];
     
-    const actionData = {
-      eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
-      nome: body.querySelector('.nome-acao').value,
-      problema: body.querySelector('textarea:nth-of-type(1)').value,
-      descricao: body.querySelector('textarea:nth-of-type(2)').value,
-      objetivos: body.querySelector('textarea:nth-of-type(3)').value,
-      itens: body.querySelector('input[type="text"]:nth-of-type(1)').value,
-      tipo: body.querySelector('select').value,
-      orcamento: body.querySelector('.masked-currency').value,
-      dataInicio: body.querySelector('input[type="date"]:nth-of-type(1)').value,
-      dataConclusao: body.querySelector('input[type="date"]:nth-of-type(2)').value,
-      indicador: body.querySelector('input[type="text"]:nth-of-type(2)').value,
-      meta: body.querySelector('input[type="text"]:nth-of-type(3)').value,
-      observacoes: body.querySelector('textarea:nth-of-type(4)').value
-    };
+    document.querySelectorAll('.accordion-item').forEach(action => {
+      const body = action.querySelector('.accordion-body');
+      if (!body) return;
+      
+      const actionData = {
+        eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
+        nome: body.querySelector('.nome-acao')?.value || '',
+        problema: body.querySelector('textarea:nth-of-type(1)')?.value || '',
+        descricao: body.querySelector('textarea:nth-of-type(2)')?.value || '',
+        objetivos: body.querySelector('textarea:nth-of-type(3)')?.value || '',
+        itens: body.querySelector('input[type="text"]:nth-of-type(1)')?.value || '',
+        tipo: body.querySelector('select')?.value || '',
+        orcamento: body.querySelector('.masked-currency')?.value || '',
+        dataInicio: body.querySelector('input[type="date"]:nth-of-type(1)')?.value || '',
+        dataConclusao: body.querySelector('input[type="date"]:nth-of-type(2)')?.value || '',
+        indicador: body.querySelector('input[type="text"]:nth-of-type(2)')?.value || '',
+        meta: body.querySelector('input[type="text"]:nth-of-type(3)')?.value || '',
+        observacoes: body.querySelector('textarea:nth-of-type(4)')?.value || ''
+      };
+      
+      actions.push(actionData);
+    });
     
-    actions.push(actionData);
-  });
-  
-  localStorage.setItem('form_actions', JSON.stringify(actions));
-}
+    localStorage.setItem('form_actions', JSON.stringify(actions));
+  },
 
 init: function() {
   console.log('Inicializando FormManager...');
@@ -237,3 +237,5 @@ init: function() {
   }
   // ... restante do código
 }
+
+document.addEventListener('DOMContentLoaded', () => FormManager.init());
