@@ -36,14 +36,11 @@ const FormManager = {
   loadMunicipioData: function() {
     const session = Auth.getCurrentSession();
     if (session) {
-      // Garante que os campos existem antes de preencher
       const ufField = document.getElementById('uf');
       const municipioField = document.getElementById('municipio-select');
       
       if (ufField && municipioField) {
         ufField.value = session.uf;
-        
-        // Busca o nome do município na estrutura de dados do Auth
         const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
         if (municipioObj) {
           municipioField.value = municipioObj.nome;
@@ -195,10 +192,7 @@ const FormManager = {
         campo.value = localStorage.getItem(`form_${id}`) || '';
       }
     });
-  }
-};
-
-document.addEventListener('DOMContentLoaded', () => FormManager.init());
+  },
 
   saveAllActions: function() {
     const actions = [];
@@ -230,4 +224,5 @@ document.addEventListener('DOMContentLoaded', () => FormManager.init());
   }
 };
 
+// APENAS UM event listener no final
 document.addEventListener('DOMContentLoaded', () => FormManager.init());
