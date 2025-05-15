@@ -100,12 +100,19 @@ function checkLogin() {
   const codigo = localStorage.getItem('municipioLogado');
   const loginScreen = document.getElementById('login-screen');
   const mainContent = document.getElementById('main-content');
+  const municipioLogado = document.getElementById('municipio-logado');
 
-  if (codigo && municipiosAutorizados[codigo]) {
+  if (codigo && municipios[codigo]) {
+    // Extrair UF (primeiros 2 caracteres)
+    const uf = codigo.substring(0, 2);
+    // Buscar nome do município
+    const nomeMunicipio = municipios[codigo].nome;
+
     if (loginScreen) loginScreen.style.display = 'none';
     if (mainContent) mainContent.style.display = 'block';
-    const municipioLogado = document.getElementById('municipio-logado');
-    if (municipioLogado) municipioLogado.textContent = `Município: ${municipiosAutorizados[codigo].nome}`;
+    if (municipioLogado) {
+      municipioLogado.textContent = `UF: ${uf} | Município: ${nomeMunicipio}`;
+    }
   } else {
     if (loginScreen) loginScreen.style.display = 'flex';
     if (mainContent) mainContent.style.display = 'none';
@@ -394,11 +401,4 @@ document.getElementById("uf").addEventListener("change", function(e) {
   atualizarMunicipios(e.target.value);
 });
 
-function checkLogin() {
-  const codigo = localStorage.getItem('municipioLogado');
-  // ... (código existente)
-  if (municipioLogado) {
-    municipioLogado.textContent = `Município: ${municipiosAutorizados[codigo].nome}`;
-  }
-}
-                          
+                         
