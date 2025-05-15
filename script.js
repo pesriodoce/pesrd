@@ -87,18 +87,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // ===== PREENCHER UF E MUNICÍPIO (FORMULÁRIO) ===== //
   if (window.location.pathname.includes('formulario.html')) {
     const codigo = localStorage.getItem('municipioLogado');
-    
-    if (codigo && municipios[codigo]) {
-      // Extrair UF (primeiros 2 caracteres)
-      const uf = codigo.substring(0, 2); // Ex: "MG310110" → "MG"
-      
-      // Buscar nome do município
-      const municipio = municipios[codigo].nome; // Ex: "AIMORÉS"
-      
-      // Preencher campos (IDs devem bater com o HTML!)
-      document.getElementById('uf').value = uf;
-      document.getElementById('municipio-select').value = municipio;
+    if (codigo) {
+      const uf = codigo.substring(0, 2);
+      const municipioObj = municipios[uf].find(m => m.codigo === codigo);
+      if (municipioObj) {
+        document.getElementById('uf').value = uf;
+        document.getElementById('municipio-select').innerHTML = `<option value="${codigo}">${municipioObj.nome}</option>`;
+        document.getElementById('municipio-select').value = codigo;
+      }
     }
+
   }
     
 // Evento de login
