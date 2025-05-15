@@ -33,26 +33,26 @@ const FormManager = {
     console.log('FormManager inicializado com sucesso');
   },
 
-loadMunicipioData: function() {
-  const session = Auth.getCurrentSession();
-  if (session) {
-    // Garante que os campos existem antes de preencher
-    const ufField = document.getElementById('uf');
-    const municipioField = document.getElementById('municipio-select');
-    
-    if (ufField && municipioField) {
-      ufField.value = session.uf;
+  loadMunicipioData: function() {
+    const session = Auth.getCurrentSession();
+    if (session) {
+      // Garante que os campos existem antes de preencher
+      const ufField = document.getElementById('uf');
+      const municipioField = document.getElementById('municipio-select');
       
-      // Busca o nome do município na estrutura de dados do Auth
-      const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
-      if (municipioObj) {
-        municipioField.value = municipioObj.nome;
-      } else {
-        console.error('Município não encontrado para o código:', session.codigo);
+      if (ufField && municipioField) {
+        ufField.value = session.uf;
+        
+        // Busca o nome do município na estrutura de dados do Auth
+        const municipioObj = Auth.municipios[session.uf]?.find(m => m.codigo === session.codigo);
+        if (municipioObj) {
+          municipioField.value = municipioObj.nome;
+        } else {
+          console.error('Município não encontrado para o código:', session.codigo);
+        }
       }
     }
-  }
-},
+  },
 
   setupEixos: function() {
     const container = document.getElementById("eixos-container");
@@ -227,15 +227,7 @@ document.addEventListener('DOMContentLoaded', () => FormManager.init());
     });
     
     localStorage.setItem('form_actions', JSON.stringify(actions));
-  },
-
-init: function() {
-  console.log('Inicializando FormManager...');
-  if (!document.getElementById('eixos-container')) {
-    console.error('Container de eixos não encontrado!');
-    return;
   }
-  // ... restante do código
-}
+};
 
 document.addEventListener('DOMContentLoaded', () => FormManager.init());
