@@ -114,14 +114,14 @@ addEixosTable: function (doc) {
         get('.descricao'),
         get('.objetivos'),
         get('.itens'),
-        get('select'),             // Tipo
-        get('.masked-currency'),   // Orçamento
-        get('input[type="date"]:nth-of-type(1)'), // Início
-        get('input[type="date"]:nth-of-type(2)'), // Fim
+        get('.tipo'),
+        get('.masked-currency'),
+        get('.inicio'),
+        get('.fim'),
         get('.indicador'),
         get('.meta'),
         get('.observacoes')
-      ]);
+      ]);    
     });
 
     if (rows.length) {
