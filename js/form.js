@@ -88,12 +88,13 @@ const FormManager = {
     newAction.innerHTML = `
       <div class="accordion-header" onclick="FormManager.toggleAccordion('${newId}')">Nova Ação</div>
       <div class="accordion-body" id="${newId}">
-        <label>Identificação do Problema:</label>
-        <textarea></textarea>
 
         <label>Nome da ação:</label>
         <input type="text" class="nome-acao">
 
+        <label>Identificação do Problema:</label>
+        <textarea></textarea>
+        
         <label>Descrição da ação:</label>
         <textarea></textarea>
 
@@ -101,7 +102,7 @@ const FormManager = {
         <textarea></textarea>
 
         <label>Itens previstos:</label>
-        <input type="text">
+        <input type="textarea">
 
         <label>Tipo da Ação:</label>
         <select>
@@ -119,10 +120,10 @@ const FormManager = {
         <input type="date">
 
         <label>Indicador:</label>
-        <input type="text">
+        <input type="textarea">
 
         <label>Meta:</label>
-        <input type="text">
+        <input type="textarea">
 
         <label>Observações:</label>
         <textarea></textarea>
