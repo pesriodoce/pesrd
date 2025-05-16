@@ -1,21 +1,13 @@
 const PDFGenerator = {
-  init: function () {
-    const waitForJS = setInterval(() => {
-      const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
-      if (jsPDF) {
-        clearInterval(waitForJS);
-        document.getElementById('generate-pdf')?.addEventListener('click', () => this.generatePDF());
-      } else {
-        console.log("Aguardando jsPDF carregar...");
-      }
-    }, 100);
-  },
-
   generatePDF: function () {
-    if (!this.validateRequiredFields()) return;
+    console.log("→ Executando generatePDF");
 
-    //const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
-    const jsPDF = window.jsPDF;
+    if (!this.validateRequiredFields()) {
+      console.log("→ Campos obrigatórios não preenchidos");
+      return;
+    }
+
+    const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
     if (!jsPDF) {
       alert("Erro: jsPDF não foi carregado corretamente.");
       return;
@@ -178,4 +170,23 @@ const PDFGenerator = {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => PDFGenerator.init());
+// Espera total da página e scripts antes de ativar botão
+window.addEventListener('load', () => {
+  const jsPDFReady = window.jsPDF || window.jspdf?.jsPDF;
+
+  if (!jsPDFReady) {
+    console.error("jsPDF ainda não disponível.");
+    return;
+  }
+
+  const btn = document.getElementById('generate-pdf');
+  if (!btn) {
+    console.error("Botão 'generate-pdf' não encontrado.");
+    return;
+  }
+
+  btn.addEventListener('click', () => {
+    console.log("Botão clicado, tentando gerar PDF...");
+    PDFGenerator.generatePDF();
+  });
+});
