@@ -12,9 +12,8 @@ const FormManager = {
   init: function() {
     console.log('Inicializando FormManager...');
     const container = document.getElementById('eixos-container');
-    
     if (!container) {
-      console.error('Container de eixos não encontrado!');
+      console.error('ERRO: Elemento #eixos-container não encontrado!');
       return;
     }
 
@@ -27,7 +26,6 @@ const FormManager = {
     // 3. Configura persistência
     this.setupFormPersistence();
     
-    container.style.display = 'block';
     console.log('FormManager inicializado com sucesso');
   },
 
@@ -54,7 +52,7 @@ const FormManager = {
     if (emailField) {
       emailField.value = localStorage.getItem('form_email') || '';
     }
-  } catch (error) {
+    catch (error) {
     console.error('Erro ao carregar dados do município:', error);
   }
 },
