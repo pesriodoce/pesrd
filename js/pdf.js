@@ -7,7 +7,6 @@ const PDFGenerator = {
       return;
     }
 
-    //const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
     const jsPDF = window.jsPDF;
     if (!jsPDF) {
       alert("Erro: jsPDF não foi carregado corretamente.");
