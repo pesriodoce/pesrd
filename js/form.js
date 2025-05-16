@@ -185,7 +185,7 @@ loadMunicipioData: function () {
   },
 
   setupFormPersistence: function() {
-    const campos = ['responsavel', 'cargo', 'uf', 'municipio-select', 'perfil-socio', 'perfil-epidemiologico', 'estrutura-rede'];
+    const campos = ['responsavel', 'cargo', 'perfil-socio', 'perfil-epidemiologico', 'estrutura-rede'];
     campos.forEach(id => {
       const campo = document.getElementById(id);
       if (campo) {
