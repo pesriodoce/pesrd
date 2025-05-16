@@ -1,6 +1,17 @@
 const PDFGenerator = {
   init: function () {
-    document.getElementById('generate-pdf')?.addEventListener('click', () => this.generatePDF());
+//    document.getElementById('generate-pdf')?.addEventListener('click', () => this.generatePDF());
+    document.addEventListener('DOMContentLoaded', () => {
+  const interval = setInterval(() => {
+    if (window.jsPDF || window.jspdf?.jsPDF) {
+      clearInterval(interval);
+      PDFGenerator.init();
+    } else {
+      console.log("Aguardando jsPDF carregar...");
+    }
+  }, 100);
+});
+
   },
 
 generatePDF: function () {
