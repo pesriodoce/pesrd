@@ -59,7 +59,7 @@ const FormManager = {
       container.innerHTML += `
         <div class="section">
           <h2 onclick="FormManager.toggleAccordion('eixo${n}')">Eixo ${n} - ${titulo}</h2>
-          <div class="accordion" id="eixo${n}"></div>
+          <div class="accordion accordion-body" id="eixo${n}"></div>
           <button class="add-action" onclick="FormManager.addAction('eixo${n}')">Adicionar nova ação</button>
         </div>`;
     });
