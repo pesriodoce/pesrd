@@ -228,15 +228,14 @@ loadMunicipioData: function () {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof Auth !== 'undefined' && Auth.getCurrentSession()) {
-    FormManager.init();
-  } else {
-    setTimeout(() => {
-      if (Auth.getCurrentSession()) {
-        FormManager.init();
-      } else {
-        console.warn("Sessão não carregada. O formulário pode não funcionar corretamente.");
-      }
-    }, 300); // pequena espera para garantir inicialização do Auth
-  }
+  const waitForSession = setInterval(() => {
+    const session = Auth?.getCurrentSession?.();
+    if (session) {
+      clearInterval(waitForSession);
+      FormManager.init();
+    } else {
+      console.log("Aguardando sessão do Auth...");
+    }
+  }, 100); // verifica a cada 100ms
 });
+
