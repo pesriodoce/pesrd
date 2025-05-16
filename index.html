@@ -65,16 +65,23 @@
 
     const uf = document.getElementById('uf')?.value;
     const codigo = document.getElementById('municipio-select')?.value;
+    const senha = document.getElementById('senha')?.value;
 
     if (!uf || !codigo) {
       alert('Selecione a UF e o município.');
       return;
     }
 
-    Auth.storeSession(codigo);
-    window.location.href = 'index.html'; // volta ao dashboard, de onde o usuário escolhe ir ao formulário
+    if (senha !== codigo) {
+      alert('Senha incorreta. A senha é o próprio código do município.');
+      return;
+    }
+
+    Auth.storeSession(codigo); // CORRETO
+    location.reload(); // volta para o dashboard da index.html
   });
 </script>
+
 
 </body>
 </html>
