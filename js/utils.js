@@ -29,4 +29,4 @@ const Utils = {
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   }
-};
+}
