@@ -7,7 +7,7 @@ const PDFGenerator = {
       return;
     }
 
-    const jsPDF = window.jsPDF;
+    const jsPDF = window.jspdf?.jsPDF;
     if (!jsPDF) {
       alert("Erro: jsPDF não foi carregado corretamente.");
       return;
@@ -172,7 +172,7 @@ const PDFGenerator = {
 
 // Espera total da página e scripts antes de ativar botão
 window.addEventListener('load', () => {
-  const jsPDFReady = window.jsPDF;
+  const jsPDFReady = window.jspdf?.jsPDF;
 
   if (!jsPDFReady) {
     console.error("jsPDF ainda não disponível.");
