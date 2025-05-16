@@ -1,3 +1,4 @@
+
 const FormManager = {
   actionCount: 0,
   eixos: [
@@ -17,49 +18,33 @@ const FormManager = {
       return;
     }
 
-    // 1. Carrega dados da sessão
     this.loadMunicipioData();
-    
-    // 2. Cria estrutura de eixos
     this.setupEixos();
-    
-    // 3. Configura persistência
     this.setupFormPersistence();
-    
+
     console.log('FormManager inicializado com sucesso');
   },
 
-loadMunicipioData: function() {
-  try {
-    const session = Auth.getCurrentSession();
-    if (!session) {
-      console.warn("Nenhuma sessão ativa encontrada");
-      return;
+  loadMunicipioData: function() {
+    try {
+      const session = Auth.getCurrentSession();
+      if (!session) {
+        console.warn("Nenhuma sessão ativa encontrada");
+        return;
+      }
+
+      const ufField = document.getElementById('uf');
+      const municipioField = document.getElementById('municipio-select');
+      const emailField = document.getElementById('email');
+
+      if (ufField) ufField.value = session.uf;
+      if (municipioField) municipioField.value = session.nome;
+      if (emailField) emailField.value = localStorage.getItem('form_email') || '';
+
+    } catch (error) {
+      console.error('Erro ao carregar dados do município:', error);
     }
-
-    const ufField = document.getElementById('uf');
-    const municipioField = document.getElementById('municipio-select');
-    const emailField = document.getElementById('email');
-
-    if (ufField) ufField.value = session.uf;
-    if (municipioField) municipioField.value = session.nome;
-    if (emailField) {
-      emailField.value = localStorage.getItem('form_email') || '';
-    }
-
-  } catch (error) {
-    console.error('Erro ao carregar dados do município:', error);
-  }
-},
-
-    // Carrega email salvo se existir
-    if (emailField) {
-      emailField.value = localStorage.getItem('form_email') || '';
-    }
-    catch (error) {
-    console.error('Erro ao carregar dados do município:', error);
-  }
-},
+  },
 
   setupEixos: function() {
     const container = document.getElementById("eixos-container");
@@ -97,48 +82,46 @@ loadMunicipioData: function() {
 
     newAction.innerHTML = `
       <div class="accordion-header" onclick="FormManager.toggleAccordion('${newId}')">Nova Ação</div>
-<div class="accordion-body" id="${newId}">
+      <div class="accordion-body" id="${newId}">
+        <label>Nome da ação:</label>
+        <input type="text" class="nome-acao">
 
-  <label>Nome da ação:</label>
-  <input type="text" class="nome-acao">
+        <label>Identificação do Problema:</label>
+        <textarea class="problema"></textarea>
 
-  <label>Identificação do Problema:</label>
-  <textarea class="problema"></textarea>
-  
-  <label>Descrição da ação:</label>
-  <textarea class="descricao"></textarea>
-           
-  <label>Objetivos:</label>
-  <textarea class="objetivos"></textarea>
+        <label>Descrição da ação:</label>
+        <textarea class="descricao"></textarea>
 
-  <label>Itens previstos:</label>
-  <textarea class="itens"></textarea>
+        <label>Objetivos:</label>
+        <textarea class="objetivos"></textarea>
 
-  <label>Tipo da Ação:</label>
-  <select class="tipo">
-    <option>Investimento</option>
-    <option>Custeio</option>
-  </select>
+        <label>Itens previstos:</label>
+        <textarea class="itens"></textarea>
 
-  <label>Orçamento previsto:</label>
-  <input type="text" class="masked-currency" id="budget-${newId}">
+        <label>Tipo da Ação:</label>
+        <select class="tipo">
+          <option>Investimento</option>
+          <option>Custeio</option>
+        </select>
 
-  <label>Data de início:</label>
-  <input type="date" class="inicio">
+        <label>Orçamento previsto:</label>
+        <input type="text" class="masked-currency" id="budget-${newId}">
 
-  <label>Data de conclusão:</label>
-  <input type="date" class="fim">
+        <label>Data de início:</label>
+        <input type="date" class="inicio">
 
-  <label>Indicador:</label>
-  <textarea class="indicador"></textarea>
+        <label>Data de conclusão:</label>
+        <input type="date" class="fim">
 
-  <label>Meta:</label>
-  <textarea class="meta"></textarea>
+        <label>Indicador:</label>
+        <textarea class="indicador"></textarea>
 
-  <label>Observações:</label>
-  <textarea class="observacoes"></textarea>
-</div>
+        <label>Meta:</label>
+        <textarea class="meta"></textarea>
 
+        <label>Observações:</label>
+        <textarea class="observacoes"></textarea>
+      </div>
     `;
 
     eixo.appendChild(newAction);
@@ -165,7 +148,7 @@ loadMunicipioData: function() {
 
   setupActionButtons: function(actionElement, eixoId, actionId) {
     const body = actionElement.querySelector('.accordion-body');
-    
+
     const salvarBtn = document.createElement('button');
     salvarBtn.innerText = 'Salvar ação';
     salvarBtn.className = 'add-action';
@@ -173,7 +156,7 @@ loadMunicipioData: function() {
       document.getElementById(actionId).style.display = "none";
       this.scrollToAction(eixoId);
     };
-    
+
     const excluirBtn = document.createElement('button');
     excluirBtn.innerText = 'Excluir ação';
     excluirBtn.className = 'remove-action';
@@ -181,7 +164,7 @@ loadMunicipioData: function() {
       actionElement.remove();
       this.scrollToAction(eixoId);
     };
-    
+
     body.append(salvarBtn, excluirBtn);
   },
 
@@ -208,34 +191,32 @@ loadMunicipioData: function() {
 
   saveAllActions: function() {
     const actions = [];
-    
+
     document.querySelectorAll('.accordion-item').forEach(action => {
       const body = action.querySelector('.accordion-body');
       if (!body) return;
-      
-    const actionData = {
-      eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
-      nome: body.querySelector('.nome-acao')?.value || '',
-      problema: body.querySelector('.problema')?.value || '',
-      descricao: body.querySelector('.descricao')?.value || '',
-      objetivos: body.querySelector('.objetivos')?.value || '',
-      itens: body.querySelector('.itens')?.value || '',
-      tipo: body.querySelector('.tipo')?.value || '',
-      orcamento: body.querySelector('.masked-currency')?.value || '',
-      dataInicio: body.querySelector('.inicio')?.value || '',
-      dataConclusao: body.querySelector('.fim')?.value || '',
-      indicador: body.querySelector('.indicador')?.value || '',
-      meta: body.querySelector('.meta')?.value || '',
-      observacoes: body.querySelector('.observacoes')?.value || ''
-    };
-      
+
+      const actionData = {
+        eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
+        nome: body.querySelector('.nome-acao')?.value || '',
+        problema: body.querySelector('.problema')?.value || '',
+        descricao: body.querySelector('.descricao')?.value || '',
+        objetivos: body.querySelector('.objetivos')?.value || '',
+        itens: body.querySelector('.itens')?.value || '',
+        tipo: body.querySelector('.tipo')?.value || '',
+        orcamento: body.querySelector('.masked-currency')?.value || '',
+        dataInicio: body.querySelector('.inicio')?.value || '',
+        dataConclusao: body.querySelector('.fim')?.value || '',
+        indicador: body.querySelector('.indicador')?.value || '',
+        meta: body.querySelector('.meta')?.value || '',
+        observacoes: body.querySelector('.observacoes')?.value || ''
+      };
+
       actions.push(actionData);
     });
-    
+
     localStorage.setItem('form_actions', JSON.stringify(actions));
   }
 };
 
-// APENAS UM event listener no final
 document.addEventListener('DOMContentLoaded', () => FormManager.init());
-
