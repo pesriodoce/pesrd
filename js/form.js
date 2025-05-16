@@ -29,24 +29,28 @@ const FormManager = {
     console.log('FormManager inicializado com sucesso');
   },
 
-  loadMunicipioData: function() {
-    try {
-      const session = Auth.getCurrentSession();
-      if (!session) {
-        console.warn("Nenhuma sessão ativa encontrada");
-        return;
-      }
-
-      const ufField = document.getElementById('uf');
-      const municipioField = document.getElementById('municipio-select');
-
-      if (ufField) ufField.value = session.uf;
-      if (municipioField) municipioField.value = session.nome;
-
-    } catch (error) {
-      console.error('Erro ao carregar dados do município:', error);
+loadMunicipioData: function() {
+  try {
+    const session = Auth.getCurrentSession();
+    if (!session) {
+      console.warn("Nenhuma sessão ativa encontrada");
+      return;
     }
-  },
+
+    const ufField = document.getElementById('uf');
+    const municipioField = document.getElementById('municipio-select');
+    const emailField = document.getElementById('email');
+
+    if (ufField) ufField.value = session.uf;
+    if (municipioField) municipioField.value = session.nome;
+    if (emailField) {
+      emailField.value = localStorage.getItem('form_email') || '';
+    }
+
+  } catch (error) {
+    console.error('Erro ao carregar dados do município:', error);
+  }
+},
 
     // Carrega email salvo se existir
     if (emailField) {
