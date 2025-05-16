@@ -7,7 +7,8 @@ const PDFGenerator = {
       return;
     }
 
-    const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
+    //const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
+    const jsPDF = window.jsPDF;
     if (!jsPDF) {
       alert("Erro: jsPDF não foi carregado corretamente.");
       return;
@@ -172,7 +173,7 @@ const PDFGenerator = {
 
 // Espera total da página e scripts antes de ativar botão
 window.addEventListener('load', () => {
-  const jsPDFReady = window.jsPDF || window.jspdf?.jsPDF;
+  const jsPDFReady = window.jsPDF;
 
   if (!jsPDFReady) {
     console.error("jsPDF ainda não disponível.");
@@ -190,3 +191,4 @@ window.addEventListener('load', () => {
     PDFGenerator.generatePDF();
   });
 });
+
