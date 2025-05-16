@@ -1,67 +1,60 @@
 const PDFGenerator = {
   init: function () {
-//    document.getElementById('generate-pdf')?.addEventListener('click', () => this.generatePDF());
-    document.addEventListener('DOMContentLoaded', () => {
-  const interval = setInterval(() => {
-    if (window.jsPDF || window.jspdf?.jsPDF) {
-      clearInterval(interval);
-      PDFGenerator.init();
-    } else {
-      console.log("Aguardando jsPDF carregar...");
-    }
-  }, 100);
-});
-
+    const waitForJS = setInterval(() => {
+      const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
+      if (jsPDF) {
+        clearInterval(waitForJS);
+        document.getElementById('generate-pdf')?.addEventListener('click', () => this.generatePDF());
+      } else {
+        console.log("Aguardando jsPDF carregar...");
+      }
+    }, 100);
   },
 
-generatePDF: function () {
-  if (!this.validateRequiredFields()) return;
+  generatePDF: function () {
+    if (!this.validateRequiredFields()) return;
 
-  const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
-  if (!jsPDF) {
-    alert("Erro: jsPDF não foi carregado corretamente.");
-    return;
-  }
-  const doc = new jsPDF('p', 'pt', 'a4');
+    const jsPDF = window.jsPDF || window.jspdf?.jsPDF;
+    if (!jsPDF) {
+      alert("Erro: jsPDF não foi carregado corretamente.");
+      return;
+    }
 
-  // Dados da sessão
-  const uf = document.getElementById('uf').value || '';
-  const municipio = document.getElementById('municipio-select').value || '';
-  const dataGeracao = new Date().toLocaleDateString('pt-BR');
+    const doc = new jsPDF('p', 'pt', 'a4');
 
-  // Inicial
-  let y = 60;
-  this.addTitle(doc, y);
-  y += 40;
+    const uf = document.getElementById('uf').value || '';
+    const municipio = document.getElementById('municipio-select').value || '';
+    const dataGeracao = new Date().toLocaleDateString('pt-BR');
 
-  y = this.addFieldSection(doc, y, "Informações Iniciais", [
-    { label: "Responsável", value: document.getElementById('responsavel').value },
-    { label: "Cargo", value: document.getElementById('cargo').value },
-    { label: "UF", value: uf },
-    { label: "Município", value: municipio }
-  ]);
+    let y = 60;
+    this.addTitle(doc, y);
+    y += 40;
 
-  y = this.addFieldSection(doc, y, "Diagnóstico Situacional", [
-    { label: "Perfil socioeconômico", value: document.getElementById('perfil-socio').value },
-    { label: "Perfil epidemiológico", value: document.getElementById('perfil-epidemiologico').value },
-    { label: "Estrutura da rede", value: document.getElementById('estrutura-rede').value }
-  ]);
+    y = this.addFieldSection(doc, y, "Informações Iniciais", [
+      { label: "Responsável", value: document.getElementById('responsavel').value },
+      { label: "Cargo", value: document.getElementById('cargo').value },
+      { label: "UF", value: uf },
+      { label: "Município", value: municipio }
+    ]);
 
-  // Nova página paisagem para eixos
-  doc.addPage('a4', 'landscape');
-  this.addEixosTable(doc);
+    y = this.addFieldSection(doc, y, "Diagnóstico Situacional", [
+      { label: "Perfil socioeconômico", value: document.getElementById('perfil-socio').value },
+      { label: "Perfil epidemiológico", value: document.getElementById('perfil-epidemiologico').value },
+      { label: "Estrutura da rede", value: document.getElementById('estrutura-rede').value }
+    ]);
 
-  // Rodapé e paginação em todas as páginas
-  const totalPages = doc.getNumberOfPages();
-  for (let i = 1; i <= totalPages; i++) {
-    doc.setPage(i);
-    this.addFooter(doc, i, totalPages, uf, municipio, dataGeracao);
-  }
+    doc.addPage('a4', 'landscape');
+    this.addEixosTable(doc);
 
-  // Nome do arquivo personalizado
-  const nomeArquivo = `plano_${municipio.replace(/\s+/g, '_').toLowerCase()}_${Date.now()}.pdf`;
-  doc.save(nomeArquivo);
-},
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      this.addFooter(doc, i, totalPages, uf, municipio, dataGeracao);
+    }
+
+    const nomeArquivo = `plano_${municipio.replace(/\s+/g, '_').toLowerCase()}_${Date.now()}.pdf`;
+    doc.save(nomeArquivo);
+  },
 
   validateRequiredFields: function () {
     const obrigatorios = {
@@ -112,81 +105,76 @@ generatePDF: function () {
     return y + 10;
   },
 
-addEixosTable: function (doc) {
-  const eixos = document.querySelectorAll('.section');
-  let y = 40;
+  addEixosTable: function (doc) {
+    const eixos = document.querySelectorAll('.section');
+    let y = 40;
 
-  eixos.forEach(section => {
-    const eixoTitulo = section.querySelector('h2')?.textContent || '';
-    const rows = [];
+    eixos.forEach(section => {
+      const eixoTitulo = section.querySelector('h2')?.textContent || '';
+      const rows = [];
 
-    section.querySelectorAll('.accordion-item').forEach(item => {
-      const get = (selector) => item.querySelector(selector)?.value?.trim() || '';      
+      section.querySelectorAll('.accordion-item').forEach(item => {
+        const get = (selector) => item.querySelector(selector)?.value?.trim() || '';
 
-      rows.push([
-        get('.nome-acao'),
-        get('.problema'),
-        get('.descricao'),
-        get('.objetivos'),
-        get('.itens'),
-        get('.tipo'),
-        get('.masked-currency'),
-        get('.inicio'),
-        get('.fim'),
-        get('.indicador'),
-        get('.meta'),
-        get('.observacoes')
-      ]);
-    });
-
-    if (rows.length) {
-      doc.setFontSize(12);
-      doc.text(eixoTitulo, 40, y);
-      y += 10;
-
-      doc.autoTable({
-        startY: y,
-        head: [[
-          'Nome da Ação', 'Problema', 'Descrição', 'Objetivos',
-          'Itens', 'Tipo', 'Orçamento', 'Início',
-          'Conclusão', 'Indicador', 'Meta', 'Observações'
-        ]],
-        body: rows,
-        margin: { left: 40, right: 40 },
-        theme: 'grid',
-        styles: {
-          fontSize: 8,
-          cellWidth: 'wrap',
-          overflow: 'linebreak',
-          valign: 'top'
-        },
-        headStyles: { fillColor: [74, 104, 133] }
+        rows.push([
+          get('.nome-acao'),
+          get('.problema'),
+          get('.descricao'),
+          get('.objetivos'),
+          get('.itens'),
+          get('.tipo'),
+          get('.masked-currency'),
+          get('.inicio'),
+          get('.fim'),
+          get('.indicador'),
+          get('.meta'),
+          get('.observacoes')
+        ]);
       });
 
-      y = doc.lastAutoTable.finalY + 20;
-    }
-  });
-},
+      if (rows.length) {
+        doc.setFontSize(12);
+        doc.text(eixoTitulo, 40, y);
+        y += 10;
 
+        doc.autoTable({
+          startY: y,
+          head: [[
+            'Nome da Ação', 'Problema', 'Descrição', 'Objetivos',
+            'Itens', 'Tipo', 'Orçamento', 'Início',
+            'Conclusão', 'Indicador', 'Meta', 'Observações'
+          ]],
+          body: rows,
+          margin: { left: 40, right: 40 },
+          theme: 'grid',
+          styles: {
+            fontSize: 8,
+            cellWidth: 'wrap',
+            overflow: 'linebreak',
+            valign: 'top'
+          },
+          headStyles: { fillColor: [74, 104, 133] }
+        });
 
-addFooter: function (doc, pageNumber, totalPages, uf, municipio, data) {
-  const isLandscape = doc.internal.pageSize.getOrientation() === 'landscape';
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
+        y = doc.lastAutoTable.finalY + 20;
+      }
+    });
+  },
 
-  doc.setFontSize(8);
-  doc.setTextColor(100);
+  addFooter: function (doc, pageNumber, totalPages, uf, municipio, data) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
 
-  // Rodapé à esquerda
-  doc.text(`UF: ${uf} | Município: ${municipio}`, 40, pageHeight - 30);
-  doc.text(`Data de geração: ${data}`, 40, pageHeight - 18);
+    doc.setFontSize(8);
+    doc.setTextColor(100);
 
-  // Página à direita
-  const pageText = `Página ${pageNumber} de ${totalPages}`;
-  const textWidth = doc.getTextWidth(pageText);
-  doc.text(pageText, pageWidth - 40 - textWidth, pageHeight - 18);
-}
-  
+    doc.text(`UF: ${uf} | Município: ${municipio}`, 40, pageHeight - 30);
+    doc.text(`Data de geração: ${data}`, 40, pageHeight - 18);
+
+    const pageText = `Página ${pageNumber} de ${totalPages}`;
+    const textWidth = doc.getTextWidth(pageText);
+    doc.text(pageText, pageWidth - 40 - textWidth, pageHeight - 18);
+  }
 };
 
 document.addEventListener('DOMContentLoaded', () => PDFGenerator.init());
