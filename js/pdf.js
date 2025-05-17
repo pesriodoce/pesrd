@@ -17,6 +17,9 @@ const PDFGenerator = {
 
     const uf = document.getElementById('uf').value || '';
     const municipio = document.getElementById('municipio-select').value || '';
+    const responsavel = document.getElementById('responsavel').value || '';
+    const cargo = document.getElementById('cargo').value || '';
+    const email = document.getElementById('email')?.value || '';
     const dataGeracao = new Date().toLocaleDateString('pt-BR');
 
     let y = 60;
@@ -24,17 +27,18 @@ const PDFGenerator = {
     y += 40;
 
     y = this.addFieldSection(doc, y, "Informações Iniciais", [
-      { label: "Responsável", value: document.getElementById('responsavel').value },
-      { label: "Cargo", value: document.getElementById('cargo').value },
+      { label: "Responsável pelo documento", value: responsavel },
+      { label: "Cargo", value: cargo },
+      { label: "E-mail", value: email },
       { label: "UF", value: uf },
       { label: "Município", value: municipio }
     ]);
 
-    y = this.addFieldSection(doc, y, "Diagnóstico Situacional", [
+    y = this.addFieldSection(doc, y, "Diagnóstico Situacional de Saúde", [
       { label: "Perfil socioeconômico", value: document.getElementById('perfil-socio').value },
       { label: "Perfil epidemiológico", value: document.getElementById('perfil-epidemiologico').value },
       { label: "Estrutura da rede", value: document.getElementById('estrutura-rede').value }
-    ]);
+    ], true);
 
     doc.addPage('a4', 'landscape');
     this.addEixosTable(doc);
@@ -73,7 +77,7 @@ const PDFGenerator = {
     doc.text("Plano de Ação - Programa Especial de Saúde do Rio Doce", 60, y);
   },
 
-  addFieldSection: function (doc, y, titulo, fields) {
+  addFieldSection: function (doc, y, titulo, fields, justificar = false) {
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.text(titulo, 60, y);
@@ -83,13 +87,18 @@ const PDFGenerator = {
     doc.setFont('helvetica', 'normal');
 
     fields.forEach(field => {
-      const lines = doc.splitTextToSize(`${field.label}: ${field.value || 'Não preenchido'}`, 480);
+      const label = field.label;
+      const value = field.value || "Não preenchido";
+      const text = justificar ? `${label}: ${value}` : `${label}: ${value}`;
+      const lines = doc.splitTextToSize(text, 480);
+
       lines.forEach(line => {
         if (y > 780) {
           doc.addPage();
           y = 60;
         }
-        doc.text(line, 60, y);
+        doc.setFont('helvetica', justificar ? 'normal' : 'bold');
+        doc.text(line, 60, y, { align: justificar ? 'justify' : 'left' });
         y += 12;
       });
       y += 5;
@@ -104,28 +113,32 @@ const PDFGenerator = {
 
     eixos.forEach(section => {
       const eixoTitulo = section.querySelector('h2')?.textContent || '';
-      const rows = [];
+      const rows1 = [];
+      const rows2 = [];
 
       section.querySelectorAll('.accordion-item').forEach(item => {
         const get = (selector) => item.querySelector(selector)?.value?.trim() || '';
 
-        rows.push([
+        rows1.push([
           get('.nome-acao'),
           get('.problema'),
           get('.descricao'),
           get('.objetivos'),
+          get('.observacoes')
+        ]);
+
+        rows2.push([
           get('.itens'),
           get('.tipo'),
           get('.masked-currency'),
           get('.inicio'),
           get('.fim'),
           get('.indicador'),
-          get('.meta'),
-          get('.observacoes')
+          get('.meta')
         ]);
       });
 
-      if (rows.length) {
+      if (rows1.length) {
         doc.setFontSize(12);
         doc.text(eixoTitulo, 40, y);
         y += 10;
@@ -133,11 +146,31 @@ const PDFGenerator = {
         doc.autoTable({
           startY: y,
           head: [[
-            'Nome da Ação', 'Problema', 'Descrição', 'Objetivos',
-            'Itens', 'Tipo', 'Orçamento', 'Início',
-            'Conclusão', 'Indicador', 'Meta', 'Observações'
+            'Nome da Ação', 'Identificação do Problema', 'Descrição da ação',
+            'Objetivos', 'Observações'
           ]],
-          body: rows,
+          body: rows1,
+          margin: { left: 40, right: 40 },
+          theme: 'grid',
+          styles: {
+            fontSize: 8,
+            cellWidth: 'wrap',
+            overflow: 'linebreak',
+            valign: 'top'
+          },
+          headStyles: { fillColor: [74, 104, 133] }
+        });
+
+        y = doc.lastAutoTable.finalY + 20;
+
+        doc.autoTable({
+          startY: y,
+          head: [[
+            'Itens previstos', 'Tipo da ação', 'Orçamento',
+            'Data de início', 'Data de conclusão',
+            'Indicador', 'Meta'
+          ]],
+          body: rows2,
           margin: { left: 40, right: 40 },
           theme: 'grid',
           styles: {
@@ -160,7 +193,6 @@ const PDFGenerator = {
 
     doc.setFontSize(8);
     doc.setTextColor(100);
-
     doc.text(`UF: ${uf} | Município: ${municipio}`, 40, pageHeight - 30);
     doc.text(`Data de geração: ${data}`, 40, pageHeight - 18);
 
@@ -170,10 +202,8 @@ const PDFGenerator = {
   }
 };
 
-// Espera total da página e scripts antes de ativar botão
 window.addEventListener('load', () => {
   const jsPDFReady = window.jspdf?.jsPDF;
-
   if (!jsPDFReady) {
     console.error("jsPDF ainda não disponível.");
     return;
@@ -190,5 +220,3 @@ window.addEventListener('load', () => {
     PDFGenerator.generatePDF();
   });
 });
-
-
