@@ -155,6 +155,13 @@ const PDFGenerator = {
             overflow: 'linebreak',
             valign: 'top'
           },
+            columnStyles: {
+            0: { cellWidth: 80 },
+            1: { cellWidth: 80 },
+            2: { cellWidth: 80 },
+            3: { cellWidth: 80 },
+            4: { cellWidth: 80 }
+          },
           headStyles: { fillColor: [74, 104, 133] }
         });
 
@@ -175,6 +182,16 @@ const PDFGenerator = {
             cellWidth: 'wrap',
             overflow: 'linebreak',
             valign: 'top'
+          },
+            columnStyles: {
+            0: { cellWidth: 60 },
+            1: { cellWidth: 60 },
+            2: { cellWidth: 60 },
+            3: { cellWidth: 50 },
+            4: { cellWidth: 50 },
+            5: { cellWidth: 60 },
+            6: { cellWidth: 60 },
+            7: { cellWidth: 50 }
           },
           headStyles: { fillColor: [74, 104, 133] }
         });
