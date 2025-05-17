@@ -156,11 +156,11 @@ const PDFGenerator = {
             valign: 'top'
           },
             columnStyles: {
-            0: { cellWidth: 80 },
-            1: { cellWidth: 80 },
-            2: { cellWidth: 80 },
-            3: { cellWidth: 80 },
-            4: { cellWidth: 80 }
+            0: { cellWidth: 120 },
+            1: { cellWidth: 130 },
+            2: { cellWidth: 130 },
+            3: { cellWidth: 130 },
+            4: { cellWidth: 130 }
           },
           headStyles: { fillColor: [74, 104, 133] }
         });
@@ -184,14 +184,14 @@ const PDFGenerator = {
             valign: 'top'
           },
             columnStyles: {
-            0: { cellWidth: 60 },
-            1: { cellWidth: 60 },
-            2: { cellWidth: 60 },
-            3: { cellWidth: 50 },
-            4: { cellWidth: 50 },
-            5: { cellWidth: 60 },
-            6: { cellWidth: 60 },
-            7: { cellWidth: 50 }
+            0: { cellWidth: 90 },
+            1: { cellWidth: 90 },
+            2: { cellWidth: 70 },
+            3: { cellWidth: 70 },
+            4: { cellWidth: 70 },
+            5: { cellWidth: 70 },
+            6: { cellWidth: 100 },
+            7: { cellWidth: 100 }
           },
           headStyles: { fillColor: [74, 104, 133] }
         });
