@@ -77,35 +77,51 @@ const PDFGenerator = {
     doc.text("Plano de Ação - Programa Especial de Saúde do Rio Doce", 60, y);
   },
 
-  addFieldSection: function (doc, y, titulo, fields, justificar = false) {
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text(titulo, 60, y);
-    y += 20;
+addFieldSection: function (doc, y, titulo, fields, justificar = false) {
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text(titulo, 60, y);
+  y += 20;
 
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  fields.forEach(field => {
+    const label = `${field.label}: `;
+    const value = field.value || "Não preenchido";
 
-    fields.forEach(field => {
-      const label = field.label;
-      const value = field.value || "Não preenchido";
-      const text = justificar ? `${label}: ${value}` : `${label}: ${value}`;
-      const lines = doc.splitTextToSize(text, 480);
+    const labelWidth = doc.getTextWidth(label);
+    const fullText = `${label}${value}`;
+    const lines = doc.splitTextToSize(fullText, 480);
 
-      lines.forEach(line => {
-        if (y > 780) {
-          doc.addPage();
-          y = 60;
-        }
-        doc.setFont('helvetica', justificar ? 'normal' : 'bold');
-        doc.text(line, 60, y, { align: justificar ? 'justify' : 'left' });
-        y += 12;
-      });
-      y += 5;
+    lines.forEach((line, index) => {
+      if (y > 780) {
+        doc.addPage();
+        y = 60;
+      }
+      if (index === 0) {
+        doc.setFont('helvetica', 'bold');
+        doc.text(label, 60, y, { baseline: 'top' });
+
+        doc.setFont('helvetica', 'normal');
+        doc.text(line.slice(label.length), 60 + labelWidth, y, {
+          align: justificar ? 'justify' : 'left',
+          maxWidth: 480 - labelWidth
+        });
+      } else {
+        doc.setFont('helvetica', 'normal');
+        doc.text(line, 60, y, {
+          align: justificar ? 'justify' : 'left',
+          maxWidth: 480
+        });
+      }
+      y += 12;
     });
 
-    return y + 10;
-  },
+    y += 8;
+  });
+
+  return y + 10;
+},
+
 
   addEixosTable: function (doc) {
     const eixos = document.querySelectorAll('.section');
@@ -128,6 +144,7 @@ const PDFGenerator = {
         ]);
 
         rows2.push([
+          get('.nome-acao'),
           get('.itens'),
           get('.tipo'),
           get('.masked-currency'),
@@ -166,7 +183,7 @@ const PDFGenerator = {
         doc.autoTable({
           startY: y,
           head: [[
-            'Itens previstos', 'Tipo da ação', 'Orçamento',
+            'Nome da Ação', 'Itens previstos', 'Tipo da ação', 'Orçamento',
             'Data de início', 'Data de conclusão',
             'Indicador', 'Meta'
           ]],
