@@ -151,16 +151,15 @@ const PDFGenerator = {
           theme: 'grid',
           styles: {
             fontSize: 8,
-            cellWidth: 'wrap',
             overflow: 'linebreak',
             valign: 'top'
           },
             columnStyles: {
             0: { cellWidth: 120 },
-            1: { cellWidth: 150 },
-            2: { cellWidth: 150 },
-            3: { cellWidth: 130 },
-            4: { cellWidth: 130 }
+            1: { cellWidth: 170 },
+            2: { cellWidth: 170 },
+            3: { cellWidth: 150 },
+            4: { cellWidth: 150 }
           },
           headStyles: { fillColor: [74, 104, 133] }
         });
@@ -179,19 +178,18 @@ const PDFGenerator = {
           theme: 'grid',
           styles: {
             fontSize: 8,
-            cellWidth: 'wrap',
             overflow: 'linebreak',
             valign: 'top'
           },
             columnStyles: {
-            0: { cellWidth: 100 },
-            1: { cellWidth: 90 },
-            2: { cellWidth: 70 },
-            3: { cellWidth: 70 },
+            0: { cellWidth: 120 },
+            1: { cellWidth: 120 },
+            2: { cellWidth: 60 },
+            3: { cellWidth: 80 },
             4: { cellWidth: 70 },
             5: { cellWidth: 70 },
-            6: { cellWidth: 105 },
-            7: { cellWidth: 105 }
+            6: { cellWidth: 120 },
+            7: { cellWidth: 120 }
           },
           headStyles: { fillColor: [74, 104, 133] }
         });
