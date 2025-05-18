@@ -104,7 +104,7 @@ const PDFGenerator = {
 
 
   addEixosTable: function (doc) {
-    const eixos = document.querySelectorAll('.section');
+    const eixos = document.querySelectorAll('.eixo-dinamico');
     let y = 40;
 
     eixos.forEach(section => {
