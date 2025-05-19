@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -21,7 +20,7 @@
     <h1>Plano de Ação do Programa Especial de Saúde do Rio Doce</h1>
 
     <!-- INFORMAÇÕES INICIAIS -->
-    <section class="section" aria-labelledby="info-header">
+    <section aria-labelledby="info-header">
       <h2 id="info-header">Informações Iniciais</h2>
 
       <label for="responsavel">Responsável pelo documento: <span class="required">*</span></label>
@@ -41,7 +40,7 @@
     </section>
 
     <!-- DIAGNÓSTICO SITUACIONAL -->
-    <section class="section" aria-labelledby="diag-header">
+    <section aria-labelledby="diag-header">
       <h2 id="diag-header">Diagnóstico Situacional de Saúde</h2>
       <label for="perfil-socio">Perfil socioeconômico, produtivo e demográfico do território:</label>
       <textarea id="perfil-socio" rows="4"></textarea>
@@ -54,12 +53,11 @@
     </section>
 
     <!-- EIXOS DINÂMICOS -->
-    <section id="eixos-container" class="eixo-dinamico" aria-live="polite"></section>
+    <section id="eixos-container" aria-live="polite"></section>
 
     <!-- BOTÕES -->
     <button id="generate-pdf" class="btn-primary" aria-label="Gerar PDF do plano de ação">Imprimir (Gerar PDF)</button>
     <button class="btn-voltar" onclick="window.location.href='index.html'" aria-label="Voltar para o painel principal">Voltar ao Dashboard</button>
   </main>
-
 </body>
 </html>
