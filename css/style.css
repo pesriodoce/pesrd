@@ -339,3 +339,10 @@ textarea.observacoes {
   color: #d32f2f;
   display: none;
 }
+
+/* Outras regras acima... */
+
+#eixos-container {
+  padding-bottom: 60px;
+}
+
