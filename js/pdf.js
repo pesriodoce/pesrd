@@ -193,8 +193,8 @@ addFieldSection: function (doc, y, titulo, fields, justificar = false) {
           },
             columnStyles: {
             0: { cellWidth: 120 },
-            1: { cellWidth: 120 },
-            2: { cellWidth: 50 },
+            1: { cellWidth: 110 },
+            2: { cellWidth: 60 },
             3: { cellWidth: 70 },
             4: { cellWidth: 80 },
             5: { cellWidth: 80 },
