@@ -184,10 +184,10 @@ const PDFGenerator = {
             columnStyles: {
             0: { cellWidth: 120 },
             1: { cellWidth: 120 },
-            2: { cellWidth: 60 },
-            3: { cellWidth: 80 },
-            4: { cellWidth: 70 },
-            5: { cellWidth: 70 },
+            2: { cellWidth: 50 },
+            3: { cellWidth: 70 },
+            4: { cellWidth: 80 },
+            5: { cellWidth: 80 },
             6: { cellWidth: 120 },
             7: { cellWidth: 120 }
           },
