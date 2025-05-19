@@ -47,6 +47,12 @@ loadMunicipioData: function () {
       emailField.value = emailSalvo || "";
     }
 
+    const telefoneField = document.getElementById("telefone");
+    if (telefoneField) {
+      const telefoneSalvo = localStorage.getItem("form_telefone");
+      telefoneField.value = telefoneSalvo || "";
+    }
+
   } catch (e) {
     console.error("Erro ao carregar dados da sessão:", e);
   }
@@ -187,7 +193,7 @@ setupEixos: function() {
   },
 
   setupFormPersistence: function() {
-    const campos = ['responsavel', 'cargo', 'perfil-socio', 'perfil-epidemiologico', 'estrutura-rede'];
+    const campos = ['responsavel', 'cargo', 'perfil-socio', 'perfil-epidemiologico', 'estrutura-rede', 'telefone', 'email'];
     campos.forEach(id => {
       const campo = document.getElementById(id);
       if (campo) {
