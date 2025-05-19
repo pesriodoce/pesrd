@@ -241,9 +241,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (session) {
       clearInterval(waitForSession);
       FormManager.init();
+
+      // 👉 Adiciona a máscara de telefone aqui
+      const telInput = document.getElementById('telefone');
+      if (telInput) {
+        telInput.addEventListener('input', function (e) {
+          let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+          e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+      }
     } else {
       console.log("Aguardando sessão do Auth...");
     }
-  }, 100); // verifica a cada 100ms
+  }, 100);
 });
+
 
