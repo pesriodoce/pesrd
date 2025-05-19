@@ -19,6 +19,7 @@ const PDFGenerator = {
     const municipio = document.getElementById('municipio-select').value || '';
     const responsavel = document.getElementById('responsavel').value || '';
     const cargo = document.getElementById('cargo').value || '';
+    const telefone = document.getElementById('telefone')?.value || '';
     const email = document.getElementById('email')?.value || '';
     const dataGeracao = new Date().toLocaleDateString('pt-BR');
 
@@ -29,6 +30,7 @@ const PDFGenerator = {
     y = this.addFieldSection(doc, y, "Informações Iniciais", [
       { label: "Responsável pelo documento", value: responsavel },
       { label: "Cargo", value: cargo },
+      { label: "Telefone", value: telefone },
       { label: "E-mail", value: email },
       { label: "UF", value: uf },
       { label: "Município", value: municipio }
