@@ -20,6 +20,7 @@ const FormManager = {
 
     this.loadMunicipioData();
     this.setupEixos();
+    this.restoreSavedActions();
     this.setupFormPersistence();
 
     console.log('FormManager inicializado com sucesso');
@@ -56,9 +57,7 @@ loadMunicipioData: function () {
   } catch (e) {
     console.error("Erro ao carregar dados da sessão:", e);
   }
-}
-
-,
+},
 
 setupEixos: function() {
   const container = document.getElementById("eixos-container");
@@ -73,7 +72,87 @@ setupEixos: function() {
   });
 },
 
+restoreSavedActions: function () {
+  const saved = localStorage.getItem('form_actions');
+  if (!saved) return;
 
+  const actions = JSON.parse(saved);
+  const grouped = {};
+
+  // Agrupar ações por eixo
+  actions.forEach(action => {
+    const eixoId = action.eixoId;
+    if (!grouped[eixoId]) grouped[eixoId] = [];
+    grouped[eixoId].push(action);
+  });
+
+  Object.entries(grouped).forEach(([eixoId, acoes]) => {
+    const eixo = document.getElementById(eixoId);
+    if (!eixo) return;
+
+    acoes.forEach(data => {
+      this.actionCount++;
+      const newId = `acao${eixoId}_${this.actionCount}`;
+      const newAction = document.createElement('div');
+      newAction.classList.add('accordion-item');
+
+      newAction.innerHTML = `
+        <div class="accordion-header" onclick="FormManager.toggleAccordion('${newId}')">${data.nome || 'Nova Ação'}</div>
+        <div class="accordion-body" id="${newId}">
+          <label>Nome da ação:</label>
+          <input type="text" class="nome-acao" value="${data.nome || ''}">
+
+          <label>Identificação do Problema:</label>
+          <textarea class="problema">${data.problema || ''}</textarea>
+
+          <label>Descrição da ação:</label>
+          <textarea class="descricao">${data.descricao || ''}</textarea>
+
+          <label>Objetivos:</label>
+          <textarea class="objetivos">${data.objetivos || ''}</textarea>
+
+          <label>Itens previstos:</label>
+          <textarea class="itens">${data.itens || ''}</textarea>
+
+          <label>Tipo da Ação:</label>
+          <select class="tipo">
+            <option${data.tipo === 'Investimento' ? ' selected' : ''}>Investimento</option>
+            <option${data.tipo === 'Custeio' ? ' selected' : ''}>Custeio</option>
+          </select>
+
+          <label>Orçamento previsto:</label>
+          <input type="text" class="masked-currency" value="${data.orcamento || ''}" id="budget-${newId}">
+
+          <label>Data de início:</label>
+          <input type="date" class="inicio" value="${data.dataInicio || ''}">
+
+          <label>Data de conclusão:</label>
+          <input type="date" class="fim" value="${data.dataConclusao || ''}">
+
+          <label>Indicador:</label>
+          <textarea class="indicador">${data.indicador || ''}</textarea>
+
+          <label>Meta:</label>
+          <textarea class="meta">${data.meta || ''}</textarea>
+
+          <label>Observações:</label>
+          <textarea class="observacoes">${data.observacoes || ''}</textarea>
+        </div>
+      `;
+
+      eixo.appendChild(newAction);
+
+      const nomeInput = newAction.querySelector('.nome-acao');
+      const header = newAction.querySelector('.accordion-header');
+      nomeInput.addEventListener('input', () => {
+        header.innerText = nomeInput.value || 'Nova Ação';
+      });
+
+      this.setupActionButtons(newAction, eixoId, newId);
+    });
+  });
+}
+  
   toggleAccordion: function(id) {
     console.log("Abrindo/fechando:", id);
     document.querySelectorAll(".accordion-body").forEach(el => {
@@ -159,6 +238,11 @@ setupEixos: function() {
 
     this.setupActionButtons(newAction, eixoId, newId);
     this.toggleAccordion(newId);
+    // Salvar ações ao digitar ou sair dos campos
+    newAction.querySelectorAll('input, textarea, select').forEach(el => {
+      el.addEventListener('change', () => this.saveAllActions());
+      el.addEventListener('blur', () => this.saveAllActions());
+    });
     this.scrollToAction(eixoId);
   },
 
