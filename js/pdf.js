@@ -77,31 +77,41 @@ const PDFGenerator = {
     doc.text("Plano de Ação - Programa Especial de Saúde do Rio Doce", 60, y);
   },
 
-  addFieldSection: function (doc, y, titulo, fields) {
-    doc.setFontSize(14);
+addFieldSection: function (doc, y, titulo, fields, justificar = false) {
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text(titulo, 60, y);
+  y += 20;
+
+  doc.setFontSize(10);
+
+  fields.forEach(field => {
+    const label = `${field.label}:`;
+    const value = field.value || "Não preenchido";
+    const textWidth = doc.getTextWidth(label);
+    const valueLines = doc.splitTextToSize(value, 480);
+
+    // Nome do campo em negrito
     doc.setFont('helvetica', 'bold');
-    doc.text(titulo, 60, y);
-    y += 20;
+    doc.text(label, 60, y);
+    y += 14;
 
-    doc.setFontSize(10);
+    // Valor justificado em fonte normal
     doc.setFont('helvetica', 'normal');
-
-    fields.forEach(field => {
-      const lines = doc.splitTextToSize(`${field.label}: ${field.value || 'Não preenchido'}`, 480);
-      lines.forEach(line => {
-        if (y > 780) {
-          doc.addPage();
-          y = 60;
-        }
-        doc.text(line, 60, y);
-        y += 12;
-      });
-      y += 5;
+    valueLines.forEach(line => {
+      if (y > 780) {
+        doc.addPage();
+        y = 60;
+      }
+      doc.text(line, 60, y, { align: justificar ? 'justify' : 'left' });
+      y += 12;
     });
 
-    return y + 10;
-  },
+    y += 10;
+  });
 
+  return y + 10;
+},
 
   addEixosTable: function (doc) {
     const eixos = document.querySelectorAll('.eixo-dinamico');
