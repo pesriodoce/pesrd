@@ -154,7 +154,17 @@ restoreSavedActions: function () {
         el.addEventListener('change', () => this.saveAllActions());
         el.addEventListener('blur', () => this.saveAllActions());
       });
-
+      // Aplica a máscara de moeda nos campos restaurados
+      const budgetInput = newAction.querySelector('.masked-currency');
+      if (budgetInput) {
+        budgetInput.addEventListener('input', function () {
+          let value = budgetInput.value.replace(/\D/g, '');
+          value = (parseInt(value, 10) / 100).toFixed(2).toString();
+          value = value.replace('.', ',');
+          value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          budgetInput.value = value ? 'R$ ' + value : '';
+        });
+      }
     });
   });
 },
@@ -303,7 +313,7 @@ restoreSavedActions: function () {
       if (!body) return;
 
       const actionData = {
-        eixoId: body.id.split('_')[0].replace('acao', 'eixo'),
+        eixoId: body.closest('.accordion')?.id || '',
         nome: body.querySelector('.nome-acao')?.value || '',
         problema: body.querySelector('.problema')?.value || '',
         descricao: body.querySelector('.descricao')?.value || '',
