@@ -149,6 +149,12 @@ restoreSavedActions: function () {
       });
 
       this.setupActionButtons(newAction, eixoId, newId);
+      // Salvar automaticamente ao alterar campos restaurados
+      newAction.querySelectorAll('input, textarea, select').forEach(el => {
+        el.addEventListener('change', () => this.saveAllActions());
+        el.addEventListener('blur', () => this.saveAllActions());
+      });
+
     });
   });
 },
