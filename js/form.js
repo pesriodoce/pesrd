@@ -124,10 +124,10 @@ restoreSavedActions: function () {
           <input type="text" class="masked-currency" value="${data.orcamento || ''}" id="budget-${newId}">
 
           <label>Data de início:</label>
-          <input type="date" class="inicio" value="${data.dataInicio || ''}">
+          <input type="month" class="inicio" value="${data.dataInicio || ''}">
 
           <label>Data de conclusão:</label>
-          <input type="date" class="fim" value="${data.dataConclusao || ''}">
+          <input type="month" class="fim" value="${data.dataConclusao || ''}">
 
           <label>Indicador:</label>
           <textarea class="indicador">${data.indicador || ''}</textarea>
