@@ -55,23 +55,59 @@ const PDFGenerator = {
     doc.save(nomeArquivo);
   },
 
-  validateRequiredFields: function () {
-    const obrigatorios = {
-      'uf': 'Selecione a UF!',
-      'municipio-select': 'Selecione o município!',
-      'responsavel': 'Preencha o responsável!'
-    };
+validateRequiredFields: function () {
+  // Validação dos campos fixos
+  const camposObrigatorios = [
+    { id: 'responsavel', msg: 'Preencha o responsável pelo documento!' },
+    { id: 'cargo', msg: 'Preencha o cargo!' },
+    { id: 'telefone', msg: 'Preencha o telefone!' },
+    { id: 'email', msg: 'Preencha o e-mail!' },
+    { id: 'uf', msg: 'Selecione a UF!' },
+    { id: 'municipio-select', msg: 'Selecione o município!' },
+    { id: 'perfil-socio', msg: 'Preencha o perfil socioeconômico!' },
+    { id: 'perfil-epidemiologico', msg: 'Preencha o perfil epidemiológico!' },
+    { id: 'estrutura-rede', msg: 'Preencha a estrutura da rede de saúde!' }
+  ];
 
-    for (const [id, mensagem] of Object.entries(obrigatorios)) {
-      const campo = document.getElementById(id);
-      if (!campo?.value.trim()) {
-        alert(mensagem);
-        campo?.focus();
+  for (const campo of camposObrigatorios) {
+    const el = document.getElementById(campo.id);
+    if (!el || !el.value.trim()) {
+      alert(campo.msg);
+      el?.focus();
+      return false;
+    }
+  }
+
+  // Validação das ações criadas
+  const camposAcaoObrigatorios = [
+    { selector: '.nome-acao', nome: 'Nome da ação' },
+    { selector: '.problema', nome: 'Identificação do problema' },
+    { selector: '.descricao', nome: 'Descrição da ação' },
+    { selector: '.objetivos', nome: 'Objetivos' },
+    { selector: '.itens', nome: 'Itens previstos' },
+    { selector: '.tipo', nome: 'Tipo da ação' },
+    { selector: '.masked-currency', nome: 'Orçamento previsto' },
+    { selector: '.inicio', nome: 'Data de início' },
+    { selector: '.fim', nome: 'Data de conclusão' },
+    { selector: '.indicador', nome: 'Indicador' },
+    { selector: '.meta', nome: 'Meta' }
+    // Observações não entram aqui
+  ];
+
+  const acoes = document.querySelectorAll('.accordion-item');
+  for (const acao of acoes) {
+    for (const campo of camposAcaoObrigatorios) {
+      const el = acao.querySelector(campo.selector);
+      if (!el || !el.value.trim()) {
+        alert(`Preencha o campo "${campo.nome}" em uma das ações.`);
+        el?.focus();
         return false;
       }
     }
-    return true;
-  },
+  }
+
+  return true;
+},
 
   addTitle: function (doc, y) {
     doc.setFont('helvetica', 'bold');
