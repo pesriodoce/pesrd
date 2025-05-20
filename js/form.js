@@ -178,40 +178,40 @@ restoreSavedActions: function () {
     newAction.innerHTML = `
       <div class="accordion-header" onclick="FormManager.toggleAccordion('${newId}')">Nova Ação</div>
       <div class="accordion-body" id="${newId}">
-        <label>Nome da ação:</label>
+        <label>Nome da ação: <span class="required">*</span></label>
         <input type="text" class="nome-acao">
 
-        <label>Identificação do Problema:</label>
+        <label>Identificação do Problema: <span class="required">*</span></label>
         <textarea class="problema"></textarea>
 
-        <label>Descrição da ação:</label>
+        <label>Descrição da ação: <span class="required">*</span></label>
         <textarea class="descricao"></textarea>
 
-        <label>Objetivos:</label>
+        <label>Objetivos: <span class="required">*</span></label>
         <textarea class="objetivos"></textarea>
 
-        <label>Itens previstos:</label>
+        <label>Itens previstos: <span class="required">*</span></label>
         <textarea class="itens"></textarea>
 
-        <label>Tipo da Ação:</label>
+        <label>Tipo da Ação: <span class="required">*</span></label>
         <select class="tipo">
           <option>Investimento</option>
           <option>Custeio</option>
         </select>
 
-        <label>Orçamento previsto:</label>
+        <label>Orçamento previsto: <span class="required">*</span></label>
         <input type="text" class="masked-currency" id="budget-${newId}">
 
-        <label>Data de início:</label>
+        <label>Data de início: <span class="required">*</span></label>
         <input type="date" class="inicio">
 
-        <label>Data de conclusão:</label>
+        <label>Data de conclusão: <span class="required">*</span></label>
         <input type="date" class="fim">
 
-        <label>Indicador:</label>
+        <label>Indicador: <span class="required">*</span></label>
         <textarea class="indicador"></textarea>
 
-        <label>Meta:</label>
+        <label>Meta: <span class="required">*</span></label>
         <textarea class="meta"></textarea>
 
         <label>Observações:</label>
