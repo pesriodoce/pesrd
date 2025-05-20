@@ -127,7 +127,7 @@ addFieldSection: function (doc, y, titulo, fields, justificar = false) {
     const label = `${field.label}:`;
     const value = field.value || "Não preenchido";
     const textWidth = doc.getTextWidth(label);
-    const valueLines = doc.splitTextToSize(value, 480);
+    const valueLines = doc.splitTextToSize(value, 500);
 
     // Nome do campo em negrito
     doc.setFont('helvetica', 'bold');
@@ -141,7 +141,7 @@ addFieldSection: function (doc, y, titulo, fields, justificar = false) {
         doc.addPage();
         y = 60;
       }
-      doc.text(line, 60, y, { align: justificar ? 'justify' : 'left' });
+      doc.text(line, 60, y); // evitar justificar diretamente
       y += 12;
     });
 
