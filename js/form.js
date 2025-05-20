@@ -151,7 +151,7 @@ restoreSavedActions: function () {
       this.setupActionButtons(newAction, eixoId, newId);
     });
   });
-}
+},
   
   toggleAccordion: function(id) {
     console.log("Abrindo/fechando:", id);
