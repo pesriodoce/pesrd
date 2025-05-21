@@ -81,6 +81,7 @@ const PDFGenerator = {
     doc.text('__________________________________________', pageWidth / 2, yAss, { align: 'center' });
     yAss += 20;
     doc.text('Presidente do Conselho Municipal de Saúde', pageWidth / 2, yAss, { align: 'center' });
+    yAss += 20;
     doc.text('(Anuência ao Plano de Ação)', pageWidth / 2, yAss, { align: 'center' });
     
     const nomeArquivo = `plano_${municipio.replace(/\s+/g, '_').toLowerCase()}_${Date.now()}.pdf`;
