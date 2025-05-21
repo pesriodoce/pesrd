@@ -60,9 +60,6 @@ const PDFGenerator = {
     // Última página de assinaturas (formato retrato)
     doc.addPage('a4', 'portrait');
 
-    // Última página de assinaturas (formato retrato)
-    doc.addPage('a4', 'portrait');
-
     const pageWidth = doc.internal.pageSize.getWidth();
     let yAss = 100;
 
@@ -70,20 +67,21 @@ const PDFGenerator = {
     doc.setFontSize(14);
     doc.text('Assinaturas', pageWidth / 2, yAss, { align: 'center' });
 
-    yAss += 60;
+    yAss += 80;
 
     // Assinatura do gestor municipal
     doc.setFontSize(10);
     doc.text('__________________________________________', pageWidth / 2, yAss, { align: 'center' });
-    yAss += 15;
+    yAss += 20;
     doc.text('Gestor Municipal de Saúde', pageWidth / 2, yAss, { align: 'center' });
 
-    yAss += 60;
+    yAss += 80;
 
     // Assinatura do Conselho
     doc.text('__________________________________________', pageWidth / 2, yAss, { align: 'center' });
-    yAss += 15;
-    doc.text('Conselho Municipal de Saúde (anuência ao plano)', pageWidth / 2, yAss, { align: 'center' });
+    yAss += 20;
+    doc.text('Presidente do Conselho Municipal de Saúde', pageWidth / 2, yAss, { align: 'center' });
+    doc.text('(Anuência ao Plano de Ação)', pageWidth / 2, yAss, { align: 'center' });
     
     const nomeArquivo = `plano_${municipio.replace(/\s+/g, '_').toLowerCase()}_${Date.now()}.pdf`;
     doc.save(nomeArquivo);
