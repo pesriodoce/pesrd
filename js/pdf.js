@@ -67,7 +67,7 @@ const PDFGenerator = {
     doc.setFontSize(14);
     doc.text('Assinaturas', pageWidth / 2, yAss, { align: 'center' });
 
-    yAss += 80;
+    yAss += 90;
 
     // Assinatura do gestor municipal
     doc.setFontSize(10);
@@ -75,7 +75,7 @@ const PDFGenerator = {
     yAss += 20;
     doc.text('Gestor Municipal de Saúde', pageWidth / 2, yAss, { align: 'center' });
 
-    yAss += 80;
+    yAss += 70;
 
     // Assinatura do Conselho
     doc.text('__________________________________________', pageWidth / 2, yAss, { align: 'center' });
