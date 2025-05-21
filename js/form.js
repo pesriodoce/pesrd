@@ -219,14 +219,10 @@ restoreSavedActions: function () {
         <input type="text" class="masked-currency" id="budget-${newId}">
 
         <label>Data de início:<span class="required">*</span></label>
-        <div class="input-icon">
-          <input type="month" class="inicio">
-        </div>
+        <input type="month" class="inicio">
 
         <label>Data de conclusão:<span class="required">*</span></label>
-        <div class="input-icon">
-          <input type="month" class="fim">
-        </div>
+        <input type="month" class="fim">
 
         <label>Indicador:<span class="required">*</span></label>
         <textarea class="indicador"></textarea>
