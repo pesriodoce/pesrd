@@ -353,12 +353,3 @@ textarea.observacoes {
 .input-icon input[type="month"] {
   padding-left: 32px;
 }
-
-.input-icon::before {
-  content: '📅';
-  position: absolute;
-  left: 10px;
-  font-size: 16px;
-  pointer-events: none;
-  color: #666;
-}
