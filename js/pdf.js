@@ -133,7 +133,7 @@ addFieldSection: function (doc, y, titulo, fields, justificar = false) {
     const label = `${field.label}:`;
     const value = field.value || "Não preenchido";
     const textWidth = doc.getTextWidth(label);
-    const valueLines = doc.splitTextToSize(value, 440);
+    const valueLines = doc.splitTextToSize(value, 480);
 
     // Nome do campo em negrito
     doc.setFont('helvetica', 'bold');
