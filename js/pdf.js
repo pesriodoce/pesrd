@@ -127,7 +127,7 @@ addFieldSection: function (doc, y, titulo, fields, justificar = false) {
     const label = `${field.label}:`;
     const value = field.value || "Não preenchido";
     const textWidth = doc.getTextWidth(label);
-    const valueLines = doc.splitTextToSize(value, 520);
+    const valueLines = doc.splitTextToSize(value, 440);
 
     // Nome do campo em negrito
     doc.setFont('helvetica', 'bold');
@@ -176,8 +176,8 @@ addFieldSection: function (doc, y, titulo, fields, justificar = false) {
           get('.itens'),
           get('.tipo'),
           get('.masked-currency'),
-          get('.inicio'),
-          get('.fim'),
+          formatarMesAno(get('.inicio')),
+          formatarMesAno(get('.fim')),
           get('.indicador'),
           get('.meta')
         ]);
