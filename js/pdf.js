@@ -1,3 +1,9 @@
+function formatarMesAno(valor) {
+  if (!valor || !valor.includes('-')) return '';
+  const [ano, mes] = valor.split('-');
+  return `${mes}/${ano}`;
+}
+
 const PDFGenerator = {
   generatePDF: function () {
     console.log("→ Executando generatePDF");
